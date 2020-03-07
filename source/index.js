@@ -1,5 +1,7 @@
 import { vueSFCParser } from '@wulechuan/vue2-official-sfc-parser'
 
+import indentJS from 'indent.js'
+
 // import pug from 'pug' // TODO
 import typescript from 'typescript'
 import stylus from 'stylus'
@@ -21,6 +23,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
     const {
         sourceContentDescriptionName,
+        indentation,
         tsconfig,
         // shouldNotCompilePug,
         shouldNotCompileStylus,
@@ -74,7 +77,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
             const { type, lang, attrs, content: blockOriginalContentString } = block
 
 
-
+            block.content = indentJS.html(blockOriginalContentString, { tabString: indentation })
             // TODO
             // if (type === 'template' && lang === 'pug' && !shouldNotCompilePug) {
             //     delete attrs.lang
@@ -107,7 +110,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                     blockOriginalContentString,
                     tsconfig
                 )
-                block.content = javaScriptCodes
+                block.content = indentJS.js(javaScriptCodes, { tabString: indentation })
             }
 
 
@@ -125,7 +128,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                         if (err) {
                             reject(err)
                         } else {
-                            block.content = cssString
+                            block.content = indentJS.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })
@@ -160,7 +163,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                             reject(err)
                         } else {
                             const cssString = result.css.toString()
-                            block.content = cssString
+                            block.content = indentJS.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })
@@ -183,7 +186,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                             reject(err)
                         } else {
                             const cssString = output.css
-                            block.content = cssString
+                            block.content = indentJS.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })

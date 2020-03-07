@@ -27,7 +27,7 @@ export default class MyTestComponent1 extends Vue {
 
 <style source-language-was="stylus">
 .my-test-component1 {
-  background-color: #123;
+    background-color: #123;
 }
 </style>
 
@@ -37,7 +37,7 @@ export default class MyTestComponent1 extends Vue {
 
 <style source-language-was="scss">
 .my-test-component1 {
-  color: cyan;
+    color: cyan;
 }
 </style>
 
@@ -47,6 +47,6 @@ export default class MyTestComponent1 extends Vue {
 
 <style source-language-was="less">
 .my-test-component1 {
-  filter: blur(2px);
+    filter: blur(2px);
 }
 </style>

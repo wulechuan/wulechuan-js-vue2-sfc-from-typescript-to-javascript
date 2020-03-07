@@ -39,8 +39,8 @@ export default MyVueSFCParserTestingSource2;
 
 <style source-language-was="stylus">
 .my-test-component2 {
-  color: #96f;
-  background-color: #fff;
+    color: #96f;
+    background-color: #fff;
 }
 </style>
 
@@ -62,8 +62,8 @@ export default MyVueSFCParserTestingSource2;
 
 <style source-language-was="sass">
 .my-test-component2 {
-  color: #96f;
-  background-color: white;
+    color: #96f;
+    background-color: white;
 }
 </style>
 

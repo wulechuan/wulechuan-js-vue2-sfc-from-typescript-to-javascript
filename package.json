@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "This tool treats a string as content of a `.vue` file written in TypeScript, and covert it into a new string, as the content of a new `.vue` file in JavaScript.",
@@ -47,6 +47,7 @@
         "@wulechuan/vue2-official-sfc-parser": "^0.1.0",
         "chalk": "^3.0.0",
         "hash-sum": "^2.0.0",
+        "indent.js": "^0.3.5",
         "less": "^3.11.1",
         "sass": "^1.26.2",
         "stylus": "^0.54.7"

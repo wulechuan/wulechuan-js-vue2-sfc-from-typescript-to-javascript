@@ -136,7 +136,7 @@ function transformContentStringOfSingleVueFile(
 ```ts
 type Options = {
     sourceContentDescriptionName?: string;
-
+    indentation?: string;
     tsconfig?: typescript.TranspileOptions,
 
     // shouldNotCompilePug, // 暂不支持，无作用。
@@ -153,17 +153,19 @@ type Options = {
 
 其中，
 
-- `sourceContentDescriptionName` 只是一个令控制台输出信息更易懂的辅助性字符串。
+-   `sourceContentDescriptionName` 只是一个令控制台输出信息更易懂的辅助性字符串。
 
-- `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
+-   `indentation`  缩进用的字符串。
 
-- `pugCompilationOptions` 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
+-   `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
 
-- `cssStylusCompilationOptions` 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
+-   `pugCompilationOptions` 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
 
-- `cssSassCompilationOptions` 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
+-   `cssStylusCompilationOptions` 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
 
-- `cssLESSCompilationOptions` 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
+-   `cssSassCompilationOptions` 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
+
+-   `cssLESSCompilationOptions` 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
 
 
 

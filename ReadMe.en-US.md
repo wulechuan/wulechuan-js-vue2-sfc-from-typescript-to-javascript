@@ -128,7 +128,7 @@ function transformContentStringOfSingleVueFile(
 ```ts
 type Options = {
     sourceContentDescriptionName?: string;
-
+    indentation?: string;
     tsconfig?: typescript.TranspileOptions,
 
     // shouldNotCompilePug, // Not implemented yet.
@@ -145,17 +145,19 @@ type Options = {
 
 Where
 
-- `sourceContentDescriptionName` is just a string that helps node console message a bit more meaningful.
+-   `sourceContentDescriptionName` is just a string that helps node console message a bit more meaningful.
 
-- `tsconfig`, see [Official Documentation](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)》and the [full schema](http://json.schemastore.org/tsconfig).
+-   `indentation`, the indentation per scope level.
 
-- `pugCompilationOptions`, see [Official Documentation](https://pugjs.org/api/reference.html#pugcompilesource-options).
+-   `tsconfig`, see [Official Documentation](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)》and the [full schema](http://json.schemastore.org/tsconfig).
 
-- `cssStylusCompilationOptions`, see [Official Documentation](https://stylus-lang.com/docs/js.html).
+-   `pugCompilationOptions`, see [Official Documentation](https://pugjs.org/api/reference.html#pugcompilesource-options).
 
-- `cssSassCompilationOptions`, see [Official Documentation](https://sass-lang.com/documentation/js-api#options).
+-   `cssStylusCompilationOptions`, see [Official Documentation](https://stylus-lang.com/docs/js.html).
 
-- `cssLESSCompilationOptions`, see [Official Documentation](http://lesscss.org/usage/#programmatic-usage).
+-   `cssSassCompilationOptions`, see [Official Documentation](https://sass-lang.com/documentation/js-api#options).
+
+-   `cssLESSCompilationOptions`, see [Official Documentation](http://lesscss.org/usage/#programmatic-usage).
 
 
 

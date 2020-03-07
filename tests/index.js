@@ -15,6 +15,7 @@ const tsconfig = {
 }
 
 const options = {
+    indentation: '    ',
     tsconfig,
 }
 
