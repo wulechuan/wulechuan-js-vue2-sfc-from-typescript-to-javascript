@@ -15,7 +15,7 @@ const tsconfig = {
 }
 
 const options = {
-    indentation: '    ',
+    indentation: false,
     tsconfig,
 }
 
@@ -77,7 +77,7 @@ $default-color: cyan;
         }
     )
 
-    await writeFile('./tests/to/test1.vue', newVueContentString)
+    await writeFile('./tests/to/test-1-result.vue', newVueContentString)
 }
 
 
@@ -96,5 +96,5 @@ async function test2(testingSourceFilePath, options) {
         }
     )
 
-    await writeFile('./tests/to/test2.vue', newVueContentString)
+    await writeFile('./tests/to/test-2-result.vue', newVueContentString)
 }

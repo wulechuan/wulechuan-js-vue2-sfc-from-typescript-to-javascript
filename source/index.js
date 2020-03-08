@@ -1,6 +1,8 @@
 import { vueSFCParser } from '@wulechuan/vue2-official-sfc-parser'
+import { getValidIndentationString } from '@wulechuan/get-valid-indentation-string'
 
-import indentJS from 'indent.js'
+import simpleIndent      from 'indent'
+import changeIndentation from 'indent.js'
 
 // import pug from 'pug' // TODO
 import typescript from 'typescript'
@@ -23,7 +25,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
     const {
         sourceContentDescriptionName,
-        indentation,
+        indentation: providedIndentation,
         tsconfig,
         // shouldNotCompilePug,
         shouldNotCompileStylus,
@@ -35,11 +37,12 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
         cssLESSCompilationOptions,
     } = options
 
+    const indentation = getValidIndentationString(providedIndentation, '    ')
+
     let _sourceContentDescriptionName = sourceContentDescriptionName
     if (!_sourceContentDescriptionName) {
         _sourceContentDescriptionName = `<Untitled source ${
             hashSum(originalVueFileContentString)
-            // Math.random().toFixed(8).slice(2)
         }>`
     }
 
@@ -77,23 +80,28 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
             const { type, lang, attrs, content: blockOriginalContentString } = block
 
 
-            block.content = indentJS.html(blockOriginalContentString, { tabString: indentation })
-            // TODO
-            // if (type === 'template' && lang === 'pug' && !shouldNotCompilePug) {
-            //     delete attrs.lang
-            //     attrs['source-language-was'] = lang
+            if (type === 'template') {
+                // TODO
+                // if (lang === 'pug' && !shouldNotCompilePug) {
+                //     delete attrs.lang
+                //     attrs['source-language-was'] = lang
 
-            //     promises.push(new Promise((resolve, reject) => {
-            //         const realCompiler = pug.compile(
-            //             blockOriginalContentString,
-            //             pugCompilationOptions
-            //         )
+                //     promises.push(new Promise((resolve, reject) => {
+                //         const realCompiler = pug.compile(
+                //             blockOriginalContentString,
+                //             pugCompilationOptions
+                //         )
 
-            //         const htmlString = realCompiler()
-            //         block.content = htmlString
-            //         resolve(true)
-            //     }))
-            // }
+                //         const htmlString = realCompiler()
+                //         block.content = htmlString
+                //         resolve(true)
+                //     }))
+                // }
+
+                let indentedContent = changeIndentation.html(blockOriginalContentString, { tabString: indentation })
+                indentedContent = simpleIndent(indentedContent, indentation)
+                block.content = indentedContent
+            }
 
 
 
@@ -110,7 +118,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                     blockOriginalContentString,
                     tsconfig
                 )
-                block.content = indentJS.js(javaScriptCodes, { tabString: indentation })
+                block.content = changeIndentation.js(javaScriptCodes, { tabString: indentation })
             }
 
 
@@ -128,7 +136,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                         if (err) {
                             reject(err)
                         } else {
-                            block.content = indentJS.css(cssString, { tabString: indentation })
+                            block.content = changeIndentation.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })
@@ -163,7 +171,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                             reject(err)
                         } else {
                             const cssString = result.css.toString()
-                            block.content = indentJS.css(cssString, { tabString: indentation })
+                            block.content = changeIndentation.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })
@@ -186,7 +194,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                             reject(err)
                         } else {
                             const cssString = output.css
-                            block.content = indentJS.css(cssString, { tabString: indentation })
+                            block.content = changeIndentation.css(cssString, { tabString: indentation })
                             resolve(true)
                         }
                     })

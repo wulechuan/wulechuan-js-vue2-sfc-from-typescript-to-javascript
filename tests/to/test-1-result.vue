@@ -1,5 +1,5 @@
 <template>
-<div class="my-test-component1"></div>
+    <div class="my-test-component1"></div>
 </template>
 
 

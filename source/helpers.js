@@ -7,7 +7,7 @@ export function logTransformation(sourceDescriptionName, fromSomething, toSometh
         ? chalk.bgHex('#319').hex('#ddd')(sourceDescriptionName)
         : chalk.bgHex('#205').hex('#ccc')(sourceDescriptionName || '<Untitled source -1>')
 
-    console.log(`${
+    console.log(`\n${
         sourceDescription
     }: ${
         verb || 'compiling'
@@ -15,5 +15,5 @@ export function logTransformation(sourceDescriptionName, fromSomething, toSometh
         chalk.green(fromSomething)
     } into ${
         chalk.yellow(toSomething)
-    }\n`)
+    }`)
 }

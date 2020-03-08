@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "This tool treats a string as content of a `.vue` file written in TypeScript, and covert it into a new string, as the content of a new `.vue` file in JavaScript.",
@@ -44,9 +44,11 @@
         "url": "https://github.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git/issues"
     },
     "dependencies": {
+        "@wulechuan/get-valid-indentation-string": "^1.0.3",
         "@wulechuan/vue2-official-sfc-parser": "^0.1.0",
         "chalk": "^3.0.0",
         "hash-sum": "^2.0.0",
+        "indent": "0.0.2",
         "indent.js": "^0.3.5",
         "less": "^3.11.1",
         "sass": "^1.26.2",
@@ -60,6 +62,7 @@
         "@typescript-eslint/eslint-plugin": "^2.22.0",
         "@typescript-eslint/parser": "^2.22.0",
         "@vue/eslint-config-typescript": "^5.0.2",
+        "@wulechuan/css-stylus-markdown-themes": "^6.4.0",
         "eslint": "^5.16.0",
         "fs-extra": "^8.1.0",
         "tslint": "^6.0.0",

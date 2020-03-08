@@ -1,6 +1,7 @@
 # 吴乐川的 Vue 2.x 单文件组件单独编译工具
 
-<link rel="stylesheet" href="./documents/styles/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+
 
 
 ## Multilingual Editions of this Article

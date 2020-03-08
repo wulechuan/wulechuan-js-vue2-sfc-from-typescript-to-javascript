@@ -34,10 +34,10 @@ export default class MyVueSFCParserTestingSource2 extends Vue {
 
 <template>
     <div class="my-test-component2">
-        <template v-for="i in 9">
-            <span :key="i">{{ i }}</span>
-        </template>
-    </div>
+                <template v-for="i in 9">
+                    <span :key="i">{{ i }}</span>
+                </template>
+            </div>
 </template>
 <style lang="sass">
 .my-test-component2

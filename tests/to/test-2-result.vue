@@ -49,11 +49,11 @@ export default MyVueSFCParserTestingSource2;
 
 
 <template>
-<div class="my-test-component2">
-    <template v-for="i in 9">
-        <span :key="i">{{ i }}</span>
-    </template>
-</div>
+    <div class="my-test-component2">
+        <template v-for="i in 9">
+            <span :key="i">{{ i }}</span>
+        </template>
+    </div>
 </template>
 
 
