@@ -156,7 +156,7 @@ type Options = {
 
 -   `sourceContentDescriptionName` 只是一个令控制台输出信息更易懂的辅助性字符串。
 
--   `indentation`  缩进用的字符串。
+-   `indentation`  缩进用的字符串。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://www.npmjs.com/package/@wulechuan/get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%88%E6%89%80%E8%B0%93-api%EF%BC%89)》。
 
 -   `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
 

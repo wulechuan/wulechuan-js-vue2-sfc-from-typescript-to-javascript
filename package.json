@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "This tool treats a string as content of a `.vue` file written in TypeScript, and covert it into a new string, as the content of a new `.vue` file in JavaScript.",
