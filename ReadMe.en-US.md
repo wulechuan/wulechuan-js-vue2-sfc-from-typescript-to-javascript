@@ -32,16 +32,18 @@
 
 ### What is it
 
-As we know, Vuejs allows so-called Sinlge-filed Component(SFC), to write markups (`<template>`), JavaScritp codes (`<script>`) and CSS codes (`<style>`) all together within a single file. And the said file by default takes `.vue` as its file extension. Well, this tool transforms the content string for a `.vue` file.
+As we know, Vuejs allows us to write so-called Sinlge-filed Components(SFC), putting markups (`<template>`), JavaScritp codes (`<script>`) and CSS codes (`<style>`) all together within a single file. And the said file by default takes `.vue` as its file extension. Well, this tool transforms the content string of a `.vue` file somehow.
 
-Simply put, this tool accept the content string of a `.vue` file, and convert the string into another string, as the content of a new `.vue` file, where the `<script>` block is for sure written in JavaScript.
+Simply put, this tool accept the content string of a `.vue` file, and convert the string into another string, as the content of a new `.vue` file, where the `<script>` block is for sure converted into JavaScript codes.
 
 
 
 
 ### Why should this tool exist
 
-Or say we are writting a Vue component as a lib, but we choose to write this component in TypeScript instead of JavaScript. When a project of pure JavaScript needs to make use of the lib written by us, that project might have difficulties to import out `.vue` file of TypeScript directly. So, as the author of the lib, we should provide a JavaScript version of our `.vue` file. This is a nice example that my tool play a role. You write your `.vue` lib component in TypeScript, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Then obviously my tool could be the key part of your tool chain, and make it a lot easier to build that tool chain.
+Say we are writting a Vue component as a library, but we choose to write this component, or these components in TypeScript instead of JavaScript.
+
+When later a project of pure JavaScript needs to make use of the library written by us, that project might have difficulties to import out `.vue` file of TypeScript directly. So, as the author of the library, we should provide a JavaScript version of our `.vue` file. This is a nice example that my tool plays a role. You write your `.vue` lib component in TypeScript as usual, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Obviously my tool could be the key part of your tool chain, and make it a lot easier to build up that tool chain.
 
 
 Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, it actually does more than simply transpile the TypeScript codes, but also by default compiles Stylus, Sass or LESS codes into standard CSS, if any. The compilations of Stylus, Sass or LESS could turn off via options, while the transipling of the TypeScript is **always** processed, and is not possible to turn off. Otherwise, why we need this tool anyway? The compilation of pug language is not supported yet, so if there are any pug codes, they are left untouched.
@@ -49,7 +51,7 @@ Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, i
 
 ### Notice
 
-This tool accept no file path string, but a file content string. So the codes for reading a file should write separately. This design makes this tool a bit more flexible.
+The string as the argument of this tool is **not** a file path, but a file content. So the codes for reading a file out as a string should write separately. This design makes this tool a bit more flexible.
 
 
 
@@ -66,6 +68,8 @@ npm  i  @wulechuan/vue2-sfc-from-typescript-to-javascript
 
 
 ### An Example
+
+Notice the function named `transformContentStringOfSingleVueFile` below.
 
 See also `./tests/index.js` in the repository of this project.
 
@@ -119,34 +123,34 @@ This tool provides the only function named `transformContentStringOfSingleVueFil
 ```ts
 function transformContentStringOfSingleVueFile(
     sourceVueFileContentString: string,
-    options?
+    options?: Options // See below
 ): string
 ```
 
 
-#### The `options`
+#### The `Options`
 
 ```ts
 type Options = {
     sourceContentDescriptionName?: string;
-    indentation?: string;
-    tsconfig?: typescript.TranspileOptions,
+    indentation?: string | number;
+    tsconfig?: typescript.TranspileOptions;
 
-    // shouldNotCompilePug, // Not implemented yet.
-    shouldNotCompileStylus?: boolean,
-    shouldNotCompileSass?: boolean,
-    shouldNotCompileLESS?: boolean,
+    // shouldNotCompilePug?: boolean; // Not implemented yet.
+    shouldNotCompileStylus?: boolean;
+    shouldNotCompileSass?: boolean;
+    shouldNotCompileLESS?: boolean;
 
-    // pugCompilationOptions, // Not implemented yet.
-    cssStylusCompilationOptions?: any,
-    cssSassCompilationOptions?: any,
-    cssLESSCompilationOptions?: any,
+    // pugCompilationOptions? boolean; // Not implemented yet.
+    cssStylusCompilationOptions?: any;
+    cssSassCompilationOptions?: any;
+    cssLESSCompilationOptions?: any;
 };
 ```
 
 Where
 
--   `sourceContentDescriptionName` is just a string that helps node console message a bit more meaningful.
+-   `sourceContentDescriptionName` is just a string that helps messages in the Nodejs console a bit more meaningful. It could be a "falsy" value like `undefined`, then the [hash-sum](https://www.npmjs.com/package/hash-sum) string of the source string is used instead.
 
 -   `indentation`, the indentation per scope level. See [API of @wulechuan/get-valid-indentation-string](https://github.com/wulechuan/wulechuan-js-get-valid-indentation-string/blob/HEAD/ReadMe.en-US.md#api).
 
