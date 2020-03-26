@@ -43,10 +43,10 @@ Simply put, this tool accept the content string of a `.vue` file, and convert th
 
 Say we are writting a Vue component as a library, but we choose to write this component, or these components in TypeScript instead of JavaScript.
 
-When later a project of pure JavaScript needs to make use of the library written by us, that project might have difficulties to import out `.vue` file of TypeScript directly. So, as the author of the library, we should provide a JavaScript version of our `.vue` file. This is a nice example that my tool plays a role. You write your `.vue` lib component in TypeScript as usual, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Obviously my tool could be the key part of your tool chain, and make it a lot easier to build up that tool chain.
+When later a project written by others, which is of pure JavaScript, needs to make use of the library written by us, that project might have difficulties to import our `.vue` file of TypeScript directly. So, as the author of the library, we should provide a JavaScript version of our `.vue` file. This is a nice example that my tool plays a role. You write your `.vue` library component in TypeScript as usual, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Obviously my tool could be the key part of your tool chain, and make it a lot easier to build up that tool chain.
 
 
-Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, it actually does more than simply transpile the TypeScript codes, but also by default compiles Stylus, Sass or LESS codes into standard CSS, if any. The compilations of Stylus, Sass or LESS could turn off via options, while the transipling of the TypeScript is **always** processed, and is not possible to turn off. Otherwise, why we need this tool anyway? The compilation of pug language is not supported yet, so if there are any pug codes, they are left untouched.
+Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, it actually does more than simply transpile the TypeScript codes, but also by default compiles Stylus, Sass or LESS codes, if any, into standard CSS. The compilations of Stylus, Sass or LESS could turn off via options, while the transipling of the TypeScript is **always** processed, that is, it is not possible to turn off. Otherwise, why we need this tool anyway? The compilation of pug language is not supported yet, so if there are any pug codes, they are left untouched.
 
 
 ### Notice

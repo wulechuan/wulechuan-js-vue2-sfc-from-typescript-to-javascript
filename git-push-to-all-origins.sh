@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 echo
 echo -e "\e[32m开始\e[0m"
