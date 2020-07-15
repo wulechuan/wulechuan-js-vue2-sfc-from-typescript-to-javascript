@@ -4,7 +4,7 @@
 .markdownlint*
 .gitignore
 node_modules
-document/**/*.html
+document
 ReadMe*.html
 tests
 dist/types.js

@@ -5,7 +5,7 @@ import { transformContentStringOfSingleVueFile } from '..'
 
 const tsconfig = {
     compilerOptions: {
-        target: 'ES2015',
+        target: 'ES2019',
         module: 'ESNext',
         noImplicitAny: true,
         removeComments: false,
