@@ -1,13 +1,15 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "author": "wulechuan <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "This tool treats a string as content of a `.vue` file, with its `<script>` part written in TypeScript, and covert the entire file content string into a new string, as the content of a new `.vue` file, where its `<script>` block is written in JavaScript.",
     "main": "./source/index.js",
     "scripts": {
         "lint": "eslint  --fix  ./source/**/*.js  ./tests/**/*.js",
-        "test": "npx  babel-node  tests/index.js"
+        "test": "npx  babel-node  tests/index.js",
+        "before-git-commit": "npm  i    &&    npm  test",
+        "prepublishOnly": "npm                     test"
     },
     "keywords": [
         "vue",

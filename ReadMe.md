@@ -6,7 +6,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./ReadMe.en-US.md)
+- [English version of this ReadMe](./documents/ReadMe.en-US.md)
 
 
 
@@ -32,7 +32,11 @@
 
 ### 功用
 
-**简而言之，本工具将一个旧有字符串转换成新字符串，并返回该新字符串。其中，旧有字符串之内容视为一个 `.vue` 文件之内容，其`<script>` 代码块可能采用 TypeScript 编写而成，其中的 `<style>` 代码块可能采用 Stylus、Sass（含 SCSS）或 LESS 编写。本工具返回的新字符串，其内容仍视为一个 `.vue` 文件之内容，其中的 `<script>` 代码块必定是 JavaScript，并且所有 `<style>` 代码的内容默认已转换成标准的 CSS。**
+本工具将一个旧有字符串转换成新字符串，并返回该新字符串。其中，旧有字符串之内容视为一个 `.vue` 文件之内容，其`<script>` 代码块可能采用 TypeScript 编写而成，其中的 `<style>` 代码块可能采用 Stylus、Sass（含 SCSS）或 LESS 编写。本工具返回的新字符串，其内容仍视为一个 `.vue` 文件之内容，其中的 `<script>` 代码块必定是 JavaScript，并且所有 `<style>` 代码的内容默认已转换成标准的 CSS。
+
+**简而言之，本工具处理一个 `.vue` 文件之内容，总是将 TypeScript 转成 JavaScript，且默认将 Stylus、Sass（含 SCSS）或 LESS 转换成 CSS。**
+
+本工具暂未实现将 Pug 转换成 HTML 之功能。
 
 
 ### 本工具之存在意义
