@@ -1,4 +1,5 @@
 .vscode
+.babel*
 .eslint*
 .markdownlint*
 .gitignore
