@@ -1,4 +1,5 @@
-import { readFile, writeFile } from 'fs-extra'
+import path from 'path'
+import { readFile, writeFile, mkdirp } from 'fs-extra'
 import { transformContentStringOfSingleVueFile } from '..'
 
 
@@ -19,15 +20,25 @@ const options = {
     tsconfig,
 }
 
-test1(options)
-test2('./tests/from/testing-source-2.vue', options)
+
+
+
+
+async function main () {
+    const folderFullPath = path.resolve(__dirname, './to')
+    await mkdirp(folderFullPath)
+    test1(options)
+    test2('./tests/from/testing-source-2.vue', options)
+}
+
+main()
 
 
 
 
 
 async function test1(options) {
-    const testingSrouce = `
+    const sourceCodeToTest = `
 <template><div class="my-test-component1"></div></template>
 
 <script lang="ts">
@@ -70,7 +81,7 @@ $default-color: cyan;
 `
 
     const newVueContentString = await transformContentStringOfSingleVueFile(
-        testingSrouce,
+        sourceCodeToTest,
         {
             ...options,
             // sourceContentDescriptionName: 'My Testing Content 1',

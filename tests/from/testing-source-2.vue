@@ -33,16 +33,18 @@ export default class MyVueSFCParserTestingSource2 extends Vue {
 </style>
 
 <template>
+    <!-- deliberately random indentations -->
     <div class="my-test-component2">
                 <template v-for="i in 9">
                     <span :key="i">{{ i }}</span>
-                </template>
+</template>
             </div>
 </template>
 <style lang="sass">
-.my-test-component2
-    color: #96f
-    background-color: white
+.my-test-component2 {
+    color: #96f;
+    background-color: white;
+}
 </style>
 
 <markdown>

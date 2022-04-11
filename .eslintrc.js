@@ -3,27 +3,33 @@ module.exports = {
     env: {
         es6: true,
         node: true,
-        browser: true,
+        browser: false,
     },
     extends: [
-        "eslint:recommended",
+        'plugin:vue/essential',
+        '@vue/typescript',
     ],
     parserOptions: {
         parser: '@typescript-eslint/parser',
-        ecmaVersion: 2018,
-        sourceType: 'module',
     },
     rules: {
         'no-unused-vars': 0, // for typescript interfaces
         'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0,
-        'no-console':  [ 0 ],
-        'no-debugger': [ 2 ],
         'no-multi-spaces': 0,
         'no-implicit-globals': 0,
         indent: ['error', 4, {
             SwitchCase: 1,
             MemberExpression: 1,
+        }],
+        'vue/html-indent': [2, 4, {
+        }],
+        'vue/html-self-closing': [2, {
+            html: {
+                void: 'never',
+                normal: 'never',
+                component: 'never',
+            },
         }],
         'no-trailing-spaces': ['error', {
             skipBlankLines: false,
@@ -36,7 +42,7 @@ module.exports = {
         'max-statements': [0, 64],
         'multiline-ternary': ['error', 'always-multiline'],
         'new-parens': [1],
-        yoda: [0, 'never'],
+        yoda: [0],
         'comma-dangle': ['error', {
             arrays: 'always-multiline',
             objects: 'always-multiline',
