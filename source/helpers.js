@@ -45,7 +45,9 @@ export function logSkippingOfATransformation(sourceDescriptionName, theOriginalT
     console.log(`\n${
         _getColorfulSourceDescription(sourceDescriptionName)
     }: ${
-        chalk.yellow('not parsed and output as is')
+        chalk.bgYellow.black(` ${theOriginalThing} `)
+    } ${
+        chalk.yellow('outputs as is.')
     }`)
 }
 

@@ -146,14 +146,15 @@ function transformContentStringOfSingleVueFile(
 type Options = {
     sourceContentDescriptionName?: string;
     indentation?: string | number;
-    tsconfig?: typescript.TranspileOptions;
 
-    // shouldNotCompilePug?: boolean; // 暂不支持，故无作用。
+    shouldNotTranspileTypescript?: boolean;
+    shouldNotCompilePug?: boolean;
     shouldNotCompileStylus?: boolean;
     shouldNotCompileSass?: boolean;
     shouldNotCompileLESS?: boolean;
 
-    // pugCompilationOptions?: any; // 暂不支持，故无作用。
+    tsconfig?: typescript.TranspileOptions;
+    pugCompilationOptions?: any;
     cssStylusCompilationOptions?: any;
     cssSassCompilationOptions?: any;
     cssLESSCompilationOptions?: any;

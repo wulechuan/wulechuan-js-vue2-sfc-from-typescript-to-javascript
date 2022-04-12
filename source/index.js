@@ -5,7 +5,7 @@ import simpleIndent      from 'indent'
 import changeIndentation from 'indent.js'
 import chalk             from 'chalk'
 
-// import pug from 'pug' // TODO
+import pug from 'pug'
 import typescript from 'typescript'
 import stylus from 'stylus'
 import sass from 'sass'
@@ -36,12 +36,15 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
     const {
         sourceContentDescriptionName,
         indentation: providedIndentation,
-        tsconfig,
-        // shouldNotCompilePug,
+
+        shouldNotTranspileTypescript,
+        shouldNotCompilePug,
         shouldNotCompileStylus,
         shouldNotCompileSass,
         shouldNotCompileLESS,
-        // pugCompilationOptions,
+
+        tsconfig,
+        pugCompilationOptions,
         cssStylusCompilationOptions,
         cssSassCompilationOptions,
         cssLESSCompilationOptions,
@@ -120,35 +123,40 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
             if (type === 'template') {
                 if (lang === 'pug') {
-                    // TODO
-                    // if (shouldNotCompilePug) {
-                    //     logSkippingOfATransformation(
-                    //         _sourceContentDescriptionName, 'pug', 'pug', 'leaving as is'
-                    //     )
-                    // } else {
-                    //     delete attrs.lang
-                    //     attrs['source-language-was'] = lang
+                    if (shouldNotCompilePug) {
+                        logSkippingOfATransformation(
+                            _sourceContentDescriptionName, 'pug'
+                        )
+                    } else {
+                        delete attrs.lang
+                        attrs['source-language-was'] = lang
 
-                    //     promises.push(new Promise((resolve, reject) => {
-                    //         logBeginOfATransformation(
-                    //             _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
-                    //         )
+                        promises.push(new Promise((resolve, reject) => {
+                            logBeginOfATransformation(
+                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                            )
 
-                    //         const realCompiler = pug.compile(
-                    //             blockOriginalContentString,
-                    //             pugCompilationOptions
-                    //         )
 
-                    //         const htmlString = realCompiler()
 
-                    //         logSuccessionOfATransformation(
-                    //             _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
-                    //         )
+                            const htmlString = pug.render(
+                                blockOriginalContentString,
+                                pugCompilationOptions
+                            )
 
-                    //         block.content = htmlString
-                    //         resolve(true)
-                    //     }))
-                    // }
+                            let indentedContent = changeIndentation.html(htmlString, { tabString: indentation })
+                            indentedContent = simpleIndent(indentedContent, indentation)
+
+                            block.content = indentedContent
+
+
+
+                            logSuccessionOfATransformation(
+                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                            )
+
+                            resolve(true)
+                        }))
+                    }
                 } else {
                     promises.push(new Promise((resolve, reject) => {
                         try {
@@ -182,39 +190,45 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
             if (type === 'script' && lang === 'ts') {
-                delete attrs.lang
-                attrs['source-language-was'] = lang
+                if (shouldNotTranspileTypescript) {
+                    logSkippingOfATransformation(
+                        _sourceContentDescriptionName, 'TypeScript'
+                    )
+                } else {
+                    delete attrs.lang
+                    attrs['source-language-was'] = lang
 
-                promises.push(new Promise((resolve, reject) => {
-                    try {
-                        logBeginOfATransformation(
-                            _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
-                        )
-
-
-
-                        const {
-                            outputText: javaScriptCodes,
-                        } = typescript.transpileModule(
-                            blockOriginalContentString,
-                            tsconfig
-                        )
-
-                        block.content = changeIndentation.js(javaScriptCodes, { tabString: indentation })
+                    promises.push(new Promise((resolve, reject) => {
+                        try {
+                            logBeginOfATransformation(
+                                _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
+                            )
 
 
 
-                        logSuccessionOfATransformation(
-                            _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
-                        )
+                            const {
+                                outputText: javaScriptCodes,
+                            } = typescript.transpileModule(
+                                blockOriginalContentString,
+                                tsconfig
+                            )
 
-                        // logSingleBlockButWithItsContentStringSliced(block)
+                            block.content = changeIndentation.js(javaScriptCodes, { tabString: indentation })
 
-                        resolve(true)
-                    } catch (e) {
-                        reject(e)
-                    }
-                }))
+
+
+                            logSuccessionOfATransformation(
+                                _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
+                            )
+
+                            // logSingleBlockButWithItsContentStringSliced(block)
+
+                            resolve(true)
+                        } catch (e) {
+                            reject(e)
+                        }
+                    }))
+                }
             }
 
 
@@ -272,11 +286,11 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                 if (shouldNotCompileSass) {
                     if (isSASS) {
                         logSkippingOfATransformation(
-                            _sourceContentDescriptionName, ' SASS '
+                            _sourceContentDescriptionName, 'SASS'
                         )
                     } else {
                         logSkippingOfATransformation(
-                            _sourceContentDescriptionName, ' SCSS '
+                            _sourceContentDescriptionName, 'SCSS'
                         )
                     }
                 } else {
@@ -287,11 +301,11 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                         try {
                             if (isSASS) {
                                 logBeginOfATransformation(
-                                    _sourceContentDescriptionName, ' SASS ', 'CSS', 'rendering'
+                                    _sourceContentDescriptionName, ' SASS', 'CSS', 'rendering'
                                 )
                             } else {
                                 logBeginOfATransformation(
-                                    _sourceContentDescriptionName, ' SCSS ', 'CSS', 'rendering'
+                                    _sourceContentDescriptionName, ' SCSS', 'CSS', 'rendering'
                                 )
                             }
 
@@ -313,11 +327,11 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
                             if (isSASS) {
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, ' SASS ', 'CSS', 'rendering'
+                                    _sourceContentDescriptionName, ' SASS', 'CSS', 'rendering'
                                 )
                             } else {
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, ' SCSS ', 'CSS', 'rendering'
+                                    _sourceContentDescriptionName, ' SCSS', 'CSS', 'rendering'
                                 )
                             }
 
@@ -336,7 +350,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
             if (type === 'style' && lang === 'less') {
                 if (shouldNotCompileLESS) {
                     logSkippingOfATransformation(
-                        _sourceContentDescriptionName, ' LESS '
+                        _sourceContentDescriptionName, 'LESS'
                     )
                 } else {
                     delete attrs.lang
@@ -345,7 +359,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                     promises.push(new Promise((resolve, reject) => {
                         try {
                             logBeginOfATransformation(
-                                _sourceContentDescriptionName, ' LESS ', 'CSS', 'rendering'
+                                _sourceContentDescriptionName, 'LESS', 'CSS', 'rendering'
                             )
 
 
@@ -363,7 +377,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, ' LESS ', 'CSS', 'rendering'
+                                    _sourceContentDescriptionName, 'LESS', 'CSS', 'rendering'
                                 )
 
                                 // logSingleBlockButWithItsContentStringSliced(block)

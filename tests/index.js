@@ -1,4 +1,5 @@
 import path from 'path'
+import chalk from 'chalk'
 import { readFile, writeFile, mkdirp } from 'fs-extra'
 import { transformContentStringOfSingleVueFile } from '..'
 
@@ -15,7 +16,7 @@ const tsconfig = {
     },
 }
 
-const options = {
+const defaultOptionsForTheseTests = {
     indentation: false,
     tsconfig,
 }
@@ -27,8 +28,22 @@ const options = {
 async function main () {
     const folderFullPath = path.resolve(__dirname, './to')
     await mkdirp(folderFullPath)
-    test1(options)
-    test2('./tests/from/testing-source-2.vue', options)
+
+    await Promise.all([
+        test1(defaultOptionsForTheseTests),
+
+        test2('./tests/from/testing-source-2.vue', defaultOptionsForTheseTests),
+
+        test3({
+            indentation: true,
+            tsconfig,
+            shouldNotTranspileTypescript: true,
+        }),
+    ])
+
+    console.log(`\n\n${
+        chalk.bgGreen(` All ${3} tests end.`)
+    }\n\n`)
 }
 
 main()
@@ -37,8 +52,8 @@ main()
 
 
 
-async function test1(options) {
-    const sourceCodeToTest = `
+async function test1 (options) {
+    const fullVueSourceCodeToTest = `
 <template><div class="my-test-component1"></div></template>
 
 <script lang="ts">
@@ -81,21 +96,21 @@ $default-color: cyan;
 `
 
     const newVueContentString = await transformContentStringOfSingleVueFile(
-        sourceCodeToTest,
+        fullVueSourceCodeToTest,
         {
             ...options,
             // sourceContentDescriptionName: 'My Testing Content 1',
         }
     )
 
-    await writeFile('./tests/to/test-1-result.vue', newVueContentString)
+    await writeFile('./tests/to/test1-result.vue', newVueContentString)
 }
 
 
 
 
 
-async function test2(testingSourceFilePath, options) {
+async function test2 (testingSourceFilePath, options) {
     const sourceVueFileRawContent = await readFile(testingSourceFilePath, 'utf8')
     const sourceVueFileContentString = sourceVueFileRawContent.toString()
 
@@ -107,5 +122,50 @@ async function test2(testingSourceFilePath, options) {
         }
     )
 
-    await writeFile('./tests/to/test-2-result.vue', newVueContentString)
+    await writeFile('./tests/to/test2-result.vue', newVueContentString)
+}
+
+
+
+
+
+async function test3 (options) {
+    const sourceCode_Pug = `
+    div.pug-template-test
+        h1 Pug - node template engine
+        
+        #container-1.col.
+            {{ usage }}
+
+        .col(v-if="favoriteFoodName")
+            p.
+                {{ favoriteFoodName }}
+
+`
+
+    const fullVueSourceCodeToTest = `
+<template lang="pug">${sourceCode_Pug}</template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default class PugTemplateTest extends Vue {
+    private usage: string = 'A test for both pug and typescript blocks'
+
+    private get favoriteFoodName (): string {
+        return '江西炒粉'
+    }
+}
+</script>
+`
+
+    const newVueContentString = await transformContentStringOfSingleVueFile(
+        fullVueSourceCodeToTest,
+        {
+            ...options,
+            sourceContentDescriptionName: 'Template written in Pug',
+        }
+    )
+
+    await writeFile('./tests/to/test3-result.vue', newVueContentString)
 }
