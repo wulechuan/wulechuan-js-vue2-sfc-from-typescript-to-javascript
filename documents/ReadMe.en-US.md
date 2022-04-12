@@ -34,24 +34,26 @@
 
 As we know, Vuejs allows us to write so-called Sinlge-filed Components(SFC), putting markups (`<template>`), JavaScritp codes (`<script>`) and CSS codes (`<style>`) all together within a single file. And the said file by default takes `.vue` as its file extension. Well, this tool transforms the content string of a `.vue` file somehow.
 
-Simply put, this tool accept the content string of a `.vue` file, and convert the string into another string, as the content of a new `.vue` file, where the `<script>` block is for sure converted into JavaScript codes.
+Simply put, this tool accepts the content string of a `.vue` file, and converts the string into another string, as the content of a new `.vue` file, where the `<script>` block is by default converted into JavaScript codes. In addition, inside the output string, any Stylus, Sass, LESS codes are compiled into standard CSS codes; The Pug codes are compiled into standard HTML codes.
 
 
 
 
 ### Why should this tool exist
 
-Say we are writting a Vue component as a library, but we choose to write this component, or these components in TypeScript instead of JavaScript.
+Say we are writting a Vue component library, but we choose to write the component, or those components in TypeScript instead of JavaScript. 
 
-When later a project written by others, which is of pure JavaScript, needs to make use of the library written by us, that project might have difficulties to import our `.vue` file of TypeScript directly. So, as the author of the library, we should provide a JavaScript version of our `.vue` file. This is a nice example that my tool plays a role. You write your `.vue` library component in TypeScript as usual, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Obviously my tool could be the key part of your tool chain, and make it a lot easier to build up that tool chain.
+Whatever, basically we created one or several `.vue` files and publish them.
+
+When later a project written by others, which is of pure JavaScript, needs to make use of the said library written by us, that project might have difficulties to import our `.vue` file of TypeScript directly. So, as the author of the library, we should provide a JavaScript version of our `.vue` files. This is a nice example that my tool plays a role. You write your `.vue` library components in TypeScript as usual, then you design a simple tool chain to convert the TypeScript version into a JavaScript version. Obviously my tool could be the key part of your tool chain, and make it a lot easier to build up that tool chain.
 
 
-Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, it actually does more than simply transpile the TypeScript codes, but also by default compiles Stylus, Sass or LESS codes, if any, into standard CSS. The compilations of Stylus, Sass or LESS could turn off via options, while the transipling of the TypeScript is **always** processed, that is, it is not possible to turn off. Otherwise, why we need this tool anyway? The compilation of pug language is not supported yet, so if there are any pug codes, they are left untouched.
+Besides, although this tool is named `vue2-sfc-from-typescript-to-javascript`, it actually does more than simply transpile the TypeScript codes. By default, my tool also compiles Stylus, Sass or LESS codes, if any, into standard CSS codes. And compiles Pug into standard HTML codes. Any conversions/transpilations/compilations can turn off via options. If any option turns off, the corresponding code blocks would be untouched in the output `.vue` file.
 
 
 ### Notice
 
-The string as the argument of this tool is **not** a file path, but a file content. So the codes for reading a file out as a string should write separately. This design makes this tool a bit more flexible.
+The string as the argument of this tool is **not** a file path, but file contents. So the codes for reading a file out as a string should write separately.
 
 
 
@@ -123,28 +125,35 @@ This tool provides the only function named `transformContentStringOfSingleVueFil
 ```ts
 function transformContentStringOfSingleVueFile(
     sourceVueFileContentString: string,
-    options?: Options // See below
+    options?: T_TransformationOptions // See below
 ): string
 ```
 
 
-#### The `Options`
+#### The `options`
 
 ```ts
-type Options = {
-    sourceContentDescriptionName?: string;
-    indentation?: string | number;
-    tsconfig?: typescript.TranspileOptions;
+import type { CompilerOptions as T_tsconfig } from 'typescript'
+import type { Options as T_PugCompilationOptions } from 'pug'
+import type { RenderOptions as T_CssStylusCompilationOptions } from 'stylus'
+import type { Options as T_CssSassCompilationOptions } from 'sass'
+import type Less from 'less'
 
-    // shouldNotCompilePug?: boolean; // Not implemented yet.
+export type T_TransformationOptions = {
+    sourceContentDescriptionName?: string;
+    indentation?: string;
+
+    shouldNotTranspileTypescript?: boolean;
+    shouldNotCompilePug?: boolean;
     shouldNotCompileStylus?: boolean;
     shouldNotCompileSass?: boolean;
     shouldNotCompileLESS?: boolean;
 
-    // pugCompilationOptions? boolean; // Not implemented yet.
-    cssStylusCompilationOptions?: any;
-    cssSassCompilationOptions?: any;
-    cssLESSCompilationOptions?: any;
+    tsconfig?: T_tsconfig;
+    pugCompilationOptions?: T_PugCompilationOptions;
+    cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
+    cssSassCompilationOptions?: T_CssSassCompilationOptions<'sync'>;
+    cssLESSCompilationOptions?: Less.Options;
 };
 ```
 
@@ -172,6 +181,5 @@ Where
 
 ## TODOs
 
--   To support compilation of pug language into HTML.
-
+-   Nothing at present.
 

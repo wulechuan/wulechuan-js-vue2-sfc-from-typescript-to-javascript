@@ -8,6 +8,7 @@ declare module '@wulechuan/vue2-sfc-from-typescript-to-javascript' {
     export type T_TransformationOptions = {
         sourceContentDescriptionName?: string;
         indentation?: string;
+
         shouldNotTranspileTypescript?: boolean;
         shouldNotCompilePug?: boolean;
         shouldNotCompileStylus?: boolean;

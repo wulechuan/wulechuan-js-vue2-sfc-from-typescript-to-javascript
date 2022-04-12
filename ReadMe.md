@@ -1,4 +1,4 @@
-# 吴乐川的 Vue 2.x 单文件组件单独编译工具
+# 吴乐川的 Vue 2.x 单文件部件单独编译工具
 
 <link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/源代码/发布的源代码/文章排版与配色方案集/层叠样式表/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
@@ -38,35 +38,59 @@
 
 ### 功用
 
-本工具将一个旧有字符串转换成新字符串，并返回该新字符串。其中，旧有字符串之内容视为一个 `.vue` 文件之内容，其`<script>` 代码块可能采用 TypeScript 编写而成，其中的 `<style>` 代码块可能采用 Stylus、Sass（含 SCSS）或 LESS 编写。本工具返回的新字符串，其内容仍视为一个 `.vue` 文件之内容，其中的 `<script>` 代码块必定是 JavaScript，并且所有 `<style>` 代码的内容默认已转换成标准的 CSS。
+本工具之主体是一个函数，其将一个旧有字符串转换成新字符串，并返回该新字符串。
 
-**简而言之，本工具处理一个 `.vue` 文件之内容，总是将 TypeScript 转成 JavaScript，且默认将 Stylus、Sass（含 SCSS）或 LESS 转换成 CSS。**
+1.  旧有字符串由外界给出，其内容视为一个 `.vue` 文件之内容。且：
 
-本工具暂未实现将 Pug 转换成 HTML 之功能。
+    -   `<script>` 代码块可能采用 TypeScript 或 JavaScript 语言编写而成；
+    -   `<template>` 代码块可能采用 Pug 或 HTML 语言编写而成；
+    -   诸 `<style>` 代码块可能采用 Stylus 、Sass（含 SCSS ）或 LESS 语言编写；
+    -   可能包含零个、一个或若干自定义内容块。
+
+1.  本工具返回的新字符串，其内容仍视为一个 `.vue` 文件之内容。默认情况下：
+
+    -   `<script>` 代码块中的代码已编译成 JavaScript 语言之代码；
+    -   `<template>` 代码块中的代码已编译成标准的 HTML 代码；
+    -   并且所有 `<style>` 代码块中的所有代码已编译成标准的 CSS 代码；
+    -   凡自定义内容块，原封不动。
+
+**简而言之，本工具处理一个 `.vue` 文件之内容全文（字符串），得到一个全新的 `.vue` 文件内容之全文（字符串）。**
+
 
 
 ### 本工具之存在意义
 
-有时，我们采用 Vue 2.x 框架编写单个组件或组件库，此时：
+**既然我们已经写就了 `.vue` 文件，为何还要产出新的 `.vue` 文件呢？**
 
-1.  我们并非要将这些组件或组件库编译打包成单一的 Web 应用 JavaScript。
-1.  我们多数人喜爱 `.vue` 文件，即【单文件组件】。
-1.  我们可能会选择 TypeScript 而非 JavaScript 来编写 `.vue` 文件中 `<script>` 标签之内容。
+这是因为，我们采用 Vue 框架编写部件（ component ）或部件库时，有以下可能的情形：
 
-如果上述三个条件同时成立，则在其他项目要引用我们撰写的上述组件或组件库时，新的问题就产生了。具体而言，如果上述所谓“其他项目”没有采用 TypeScript 编写，且没有做令 JavaScript 兼容 TypeScript 语法的相关工具配置，那么，很显然此所谓“其他项目”将无法正常引用你的库。因为你的库是 TypeScript 写成的，而引用该库的项目却不是。
+1.  我们多数人喜爱采取 `.vue` 文件（即【单文件部件】）之形式。
+1.  我们可能会选择 TypeScript 语言而非 JavaScript 语言来编写 `.vue` 文件中 `<script>` 标签之内容。
+1.  我们并非要将这些部件或部件库编译打包成单一的网页应用（ Web App ），而是要发布到云端（典型的如 `npmjs.org` ）供其他项目引用（调用）。
+
+**如果上述三个条件同时成立，则在其他项目要引用我们的这类部件或部件库时，就可能遭遇问题。** 这又是因为：
+
+-   已知我们的工具的代码是 TypeScript 语言编写的；
+-   其他人在其项目中则可能采用纯 JavaScript 而非 TypeScript 语言编写代码。且可能其并未配置与兼容 TypeScript 代码相关的复杂的工具链。故其项目无法直接利用我们采用 TypeScript 语言编写的 `.vue` 部件。**他们的项目希望利用纯用 JavaScript 语言编写之工具。**
+
+
 
 解决这个问题有两个方案，如下：
 
-1.  指导其他项目做好令 JavaScript 代码兼容 TypeScript 语法的配置。这个方案很不友好。而且我本人也没有仔细尝试，可行与否未有定论。
+1.  不厌其烦地指导其他项目做好令 JavaScript 代码兼容 TypeScript 语法的配置。这个方案很不友好。况且我本人也没有仔细尝试，可行与否未有定论。
 
-1.  提前将你的库代码从 TypeScript 编译成 JavaScript，令上述所谓“其他项目”放心使用。**简而言之，双管齐下。** 由此，不论其他项目采用 TypeScript 还是 JavaScript，均可使用你编写的 `.vue` 组件无虞。**如果你选择这个方案，那么你需要一个工具来帮助你做代码转换。本工具或许会是不二之选。**
+1.  每当我们采用 TypeScript 语言编写独立的 Vue 部件后，在发布这些由 TypeScript 语言编写的代码时，一并发布一套 JavaScript 语言之版本的代码。**即，我们在发布时， TypeScript 和 JavaScript 并举。** 由此，不论其他项目采用 TypeScript 还是 JavaScript 语言，均可使用我们编写的 `.vue` 部件无虞。
 
-> 顺便指出，本工具名称为 `vue2-sfc-from-typescript-to-javascript`，这或许给人造成“本工具仅处理 `<script>` 代码块”的错误印象。实则本工具之转换能力并不局限于转换 `<script>` 之内容，本工具默认也支持将 Stylus、Sass、LESS 转换成标准的 CSS。此三类与 CSS 相关的转换默认既是开启的，但可以通过选项关闭。而由 TypeScript 至 JavaScript 的转换是不能关闭的。否则，私以为阁下就不必采用本工具了。采用 pug 语法的 `<template>` 内容块暂不支持转换成标准的 HTML，故而，在结果字符串中（即在结果 `.vue` 文件内容中），pug 代码将原封不动。
+**如果你采取第 2 方案，那么需要一个工具来帮助你做代码转换。而本工具许是阁下不二之选。**
+
+> 顺便指出，本工具虽名称为 `vue2-sfc-from-typescript-to-javascript`，易给人造成“本工具仅处理 `<script>` 代码块”的错误印象。实则本工具默认也会将 Stylus 、Sass 、LESS 转换成标准的 CSS ；并将 `<template>` 中采用 Pug 语言编写的代码编译成标准的 HTML 代码。
+>
+> **所有代码转换动作默认均是开启的**，且均可通过选项关闭。若某转换开关关闭，则对应语种之代码将原封不动输出。
 
 
 ### 注意事项
 
-> 本工具接受的输入**并非**文件路径字符串，而是文件内容字符串。因此，读取文件之操作须另行编写。如此设计，自然是为了令本工具拥有更佳的通用性。
+-   本工具接受的输入是一个字符串，但该字符串**并非** `.vue` 文件路径之字符串，而是 `.vue` 文件之**内容**之字符串。因此，读取文件之操作须另行编写。如此设计，自然是为了令本工具拥有更佳的通用性。
 
 
 
@@ -112,7 +136,7 @@ async function convert(sourceVueFilePath, targetVueFilePath, options) {
     const sourceVueFileRawContent = await readFile(sourceVueFilePath, 'utf8')
     const sourceVueFileContentString = sourceVueFileRawContent.toString()
 
-    // This is it. The `transformContentStringOfSingleVueFile`.
+    // 下方 `transformContentStringOfSingleVueFile` 即是。
     const newVueContentString = await transformContentStringOfSingleVueFile(
         sourceVueFileContentString,
         {
@@ -130,22 +154,28 @@ async function convert(sourceVueFilePath, targetVueFilePath, options) {
 
 #### 主函数
 
-本工具提供唯一的函数用于转换 `.vue` 文件之内容字符串。该函数名为 `transformContentStringOfSingleVueFile`。该函数之签名（Signature）如下：
+本工具仅提供唯一的函数作为对外接口。该函数名为 `transformContentStringOfSingleVueFile` ，用于转换 `.vue` 文件之内容字符串。其签名（ Signature ）如下：
 
 ```ts
 function transformContentStringOfSingleVueFile(
     sourceVueFileContentString: string,
-    options?: Options // 详见下文。
+    options?: T_TransformationOptions // 详见下文。
 ): string
 ```
 
 
-#### 主函数之选项（`Options`）
+#### 主函数之选项（`options`）
 
 ```ts
-type Options = {
+import type { CompilerOptions as T_tsconfig } from 'typescript'
+import type { Options as T_PugCompilationOptions } from 'pug'
+import type { RenderOptions as T_CssStylusCompilationOptions } from 'stylus'
+import type { Options as T_CssSassCompilationOptions } from 'sass'
+import type Less from 'less'
+
+export type T_TransformationOptions = {
     sourceContentDescriptionName?: string;
-    indentation?: string | number;
+    indentation?: string;
 
     shouldNotTranspileTypescript?: boolean;
     shouldNotCompilePug?: boolean;
@@ -153,11 +183,11 @@ type Options = {
     shouldNotCompileSass?: boolean;
     shouldNotCompileLESS?: boolean;
 
-    tsconfig?: typescript.TranspileOptions;
-    pugCompilationOptions?: any;
-    cssStylusCompilationOptions?: any;
-    cssSassCompilationOptions?: any;
-    cssLESSCompilationOptions?: any;
+    tsconfig?: T_tsconfig;
+    pugCompilationOptions?: T_PugCompilationOptions;
+    cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
+    cssSassCompilationOptions?: T_CssSassCompilationOptions<'sync'>;
+    cssLESSCompilationOptions?: Less.Options;
 };
 ```
 
@@ -195,7 +225,7 @@ type Options = {
 
 ## 未来计划
 
--   支持由 pug 编译至 HTML。
+-   暂无。
 
 
 
