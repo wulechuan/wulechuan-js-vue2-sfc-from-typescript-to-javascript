@@ -3,6 +3,11 @@ import chalk from 'chalk'
 
 
 
+/** @typedef {'compiling' | 'transpiling' | 'rendering' | 'formatting'} T_KnownVerbs */
+
+
+
+
 
 export const loggingPrefix = `${chalk.whiteBright('@wulechuan/vue2-official-sfc-parser')}:`
 export const errorLoggingPrefix = `\n${chalk.red('Error')}:\n${loggingPrefix}`
@@ -12,6 +17,10 @@ export const debuggingPrefix = `\n${loggingPrefix}\n${chalk.bgYellow.black('DEBU
 
 
 
+/**
+ * @param {string} sourceDescriptionName
+ * @returns {string}
+ */
 function _getColorfulSourceDescription (sourceDescriptionName) {
     const sourceDescriptionNameHasProvided = !!sourceDescriptionName
         && !(/^<Untitled source [\d\w]+>$/.test(sourceDescriptionName))
@@ -23,7 +32,15 @@ function _getColorfulSourceDescription (sourceDescriptionName) {
     return `${loggingPrefix}\n    ${sourceDescription}`
 }
 
-function _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, suffix) {
+/**
+ * @param {string} sourceDescriptionName
+ * @param {string} fromSomething
+ * @param {string} fromSomething
+ * @param {T_KnownVerbs} verb
+ * @param {string} suffix
+ * @returns {string}
+ */
+function _logTransformationEvent (sourceDescriptionName, fromSomething, fromSomething, verb, suffix) {
     console.log(`\n${
         _getColorfulSourceDescription(sourceDescriptionName)
     }: ${
@@ -41,7 +58,7 @@ function _logTransformationEvent(sourceDescriptionName, fromSomething, toSomethi
 
 
 
-export function logSkippingOfATransformation(sourceDescriptionName, theOriginalThing) {
+export function logSkippingOfATransformation (sourceDescriptionName, theOriginalThing) {
     console.log(`\n${
         _getColorfulSourceDescription(sourceDescriptionName)
     }: ${
@@ -55,7 +72,7 @@ export function logSkippingOfATransformation(sourceDescriptionName, theOriginalT
 
 
 
-export function logBeginOfATransformation(sourceDescriptionName, fromSomething, toSomething, verb) {
+export function logBeginningOfATransformation (sourceDescriptionName, fromSomething, toSomething, verb) {
     _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, '...')
 }
 
@@ -63,7 +80,7 @@ export function logBeginOfATransformation(sourceDescriptionName, fromSomething, 
 
 
 
-export function logSuccessionOfATransformation(sourceDescriptionName, fromSomething, toSomething, verb) {
+export function logSuccessionOfATransformation (sourceDescriptionName, fromSomething, toSomething, verb) {
     _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, `...${chalk.greenBright('SUCCEEDED')}`)
 }
 
@@ -102,6 +119,10 @@ export function logSingleBlockButWithItsContentStringSliced (theBlockToLog, slic
 
 
 
+/**
+ * @param {number} slicedCharsCount
+ * @returns {string}
+ */
 function _getStringOfHintOfContentDidSliced(slicedCharsCount) {
     const coreString = `\n... and ${slicedCharsCount} chars odmitted.`
     // return chalk.yellow(coreString) // node 命令行环境中打印复杂的对象中的文本值时，无法支持自定义彩色。在对象、数组中均失败。

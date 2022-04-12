@@ -19,7 +19,7 @@ import {
     errorLoggingPrefix,
 
     logSkippingOfATransformation,
-    logBeginOfATransformation,
+    logBeginningOfATransformation,
     logSuccessionOfATransformation,
 
     logAllBlocksOfTheDescriptorButWithSliceEachContentSliced,
@@ -132,7 +132,10 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                         attrs['source-language-was'] = lang
 
                         promises.push(new Promise((resolve, reject) => {
-                            logBeginOfATransformation(
+                            logBeginningOfATransformation(
+                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                            )
+                            logBeginningOfATransformation(
                                 _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
                             )
 
@@ -160,7 +163,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                 } else {
                     promises.push(new Promise((resolve, reject) => {
                         try {
-                            logBeginOfATransformation(
+                            logBeginningOfATransformation(
                                 _sourceContentDescriptionName, 'HTML', 'HTML', 'formatting'
                             )
 
@@ -200,7 +203,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
                     promises.push(new Promise((resolve, reject) => {
                         try {
-                            logBeginOfATransformation(
+                            logBeginningOfATransformation(
                                 _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
                             )
 
@@ -244,7 +247,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
                     promises.push(new Promise((resolve, reject) => {
                         try {
-                            logBeginOfATransformation(
+                            logBeginningOfATransformation(
                                 _sourceContentDescriptionName, 'Stylus', 'CSS', 'rendering'
                             )
 
@@ -300,11 +303,11 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                     promises.push(new Promise((resolve, reject) => {
                         try {
                             if (isSASS) {
-                                logBeginOfATransformation(
+                                logBeginningOfATransformation(
                                     _sourceContentDescriptionName, ' SASS', 'CSS', 'rendering'
                                 )
                             } else {
-                                logBeginOfATransformation(
+                                logBeginningOfATransformation(
                                     _sourceContentDescriptionName, ' SCSS', 'CSS', 'rendering'
                                 )
                             }
@@ -358,7 +361,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
                     promises.push(new Promise((resolve, reject) => {
                         try {
-                            logBeginOfATransformation(
+                            logBeginningOfATransformation(
                                 _sourceContentDescriptionName, 'LESS', 'CSS', 'rendering'
                             )
 
