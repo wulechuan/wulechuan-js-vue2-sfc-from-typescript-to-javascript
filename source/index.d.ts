@@ -23,6 +23,6 @@ declare module '@wulechuan/vue2-sfc-from-typescript-to-javascript' {
 
     export function transformContentStringOfSingleVueFile (
         originalVueFileContentString?: string,
-        options?: T_Options
+        options?: T_TransformationOptions
     ): Promise<string>;
 }

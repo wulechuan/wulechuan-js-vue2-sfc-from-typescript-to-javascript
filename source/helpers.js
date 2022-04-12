@@ -35,12 +35,12 @@ function _getColorfulSourceDescription (sourceDescriptionName) {
 /**
  * @param {string} sourceDescriptionName
  * @param {string} fromSomething
- * @param {string} fromSomething
+ * @param {string} toSomething
  * @param {T_KnownVerbs} verb
  * @param {string} suffix
  * @returns {string}
  */
-function _logTransformationEvent (sourceDescriptionName, fromSomething, fromSomething, verb, suffix) {
+function _logTransformationEvent (sourceDescriptionName, fromSomething, toSomething, verb, suffix) {
     console.log(`\n${
         _getColorfulSourceDescription(sourceDescriptionName)
     }: ${
