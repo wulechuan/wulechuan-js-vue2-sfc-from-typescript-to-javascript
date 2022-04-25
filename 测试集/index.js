@@ -33,7 +33,7 @@ async function 主程序 () {
 
 
 
-    await Promise.all([
+    const 结果集_此处仅用于计数罢了 = await Promise.all([
         // 照常输出所有标签。
         测试用例1(
             `${容纳各输出文件之文件夹之路径}/测试用例1-输出结果-甲.vue`,
@@ -71,7 +71,7 @@ async function 主程序 () {
     ])
 
     console.log(`\n\n${
-        chalk.bgGreen(` 全 ${3} 则测试用例运行完毕。`)
+        chalk.bgGreen(` 全 ${结果集_此处仅用于计数罢了.length} 则测试用例运行完毕。`)
     }\n\n`)
 }
 
