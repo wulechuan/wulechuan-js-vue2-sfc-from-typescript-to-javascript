@@ -122,30 +122,30 @@ const tsconfig = {
     },
 }
 
-const options = {
+const 配置项总集之公共部分 = {
     tsconfig,
 }
 
-convert(
+转换单个Vue文件(
     './lib/my-cool-component.vue',
     './dist/lib/my-cool-component.js.vue',
-    options
+    配置项总集之公共部分
 )
 
-async function convert(sourceVueFilePath, targetVueFilePath, options) {
-    const sourceVueFileRawContent = await readFile(sourceVueFilePath, 'utf8')
-    const sourceVueFileContentString = sourceVueFileRawContent.toString()
+async function 转换单个Vue文件(原始文件之路径, 输出文件之路径, 配置项总集) {
+    const 原始Vue文件之内容包 = await readFile(原始文件之路径, 'utf8')
+    const 原始Vue文件之内容全文 = 原始Vue文件之内容包.toString()
 
-    // 下方 `transformContentStringOfSingleVueFile` 即是。
-    const newVueContentString = await transformContentStringOfSingleVueFile(
-        sourceVueFileContentString,
+    // 下方的 `处理一个Vue2的单文件部件的内容` 即是本工具之唯一接口函数。
+    const 得到的新的Vue文件之内容全文 = await 处理一个Vue2的单文件部件的内容(
+        原始Vue文件之内容全文,
         {
-            ...options,
-            sourceContentDescriptionName: 'My Cool Component',
+            ...配置项总集,
+            用于命令行消息中的对原内容的扼要描述: '一枚极为闪耀的 Vue 2 部件',
         }
     )
 
-    await writeFile(targetVueFilePath, newVueContentString)
+    await writeFile(输出文件之路径, 得到的新的Vue文件之内容全文)
 }
 ```
 
