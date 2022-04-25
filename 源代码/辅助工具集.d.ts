@@ -2,9 +2,9 @@ import type { SFCDescriptor, SFCBlock } from '@wulechuan/vue2-official-sfc-parse
 
 
 
-export declare const loggingPrefix: string
-export declare const errorLoggingPrefix: string
-export declare const debuggingPrefix: string
+export declare const 正常消息之统一前缀文本: string
+export declare const 出错消息之统一前缀文本: string
+export declare const 调试信息之统一前缀文本: string
 
 
 
@@ -15,31 +15,36 @@ export type T_KnownVerbs = 'compiling' | 'transpiling' | 'rendering' | 'formatti
 export declare function 依次尽早采纳布尔值 (...参数序列: any[]): boolean
 export declare function 依次尽早采纳对象值 (...参数序列: any[]): null | { [键: string]: 值; }
 
-export declare function logSkippingOfATransformation (
-    sourceDescriptionName?: string,
-    theOriginalThing?: string
+export declare function 在命令行环境中报告某内容块被丢弃 (
+    用于命令行消息中的对原内容的扼要描述?: string,
+    原始内容之称谓?: string
 ): void;
 
-export declare function logBeginningOfATransformation (
-    sourceDescriptionName?: string,
-    fromSomething?: string,
-    toSomething?: string,
-    verb?: T_KnownVerbs
+export declare function 在命令行环境中报告某内容块原封未动 (
+    用于命令行消息中的对原内容的扼要描述?: string,
+    原始内容之称谓?: string
 ): void;
 
-export declare function logSuccessionOfATransformation (
-    sourceDescriptionName?: string,
-    fromSomething?: string,
-    toSomething?: string,
-    verb?: T_KnownVerbs
+export declare function 在命令行环境中报告某任务已启动 (
+    用于命令行消息中的对原内容的扼要描述?: string,
+    源内容之称谓?: string,
+    动作之称谓?: T_KnownVerbs,
+    产出内容之称谓?: string
 ): void;
 
-export declare function logAllBlocksOfTheDescriptorButWithSliceEachContentSliced (
-    theDescriptor?: SFCDescriptor,
-    slicingLength?: number
+export declare function 在命令行环境中报告某任务已成功 (
+    用于命令行消息中的对原内容的扼要描述?: string,
+    源内容之称谓?: string,
+    动作之称谓?: T_KnownVerbs,
+    产出内容之称谓?: string
 ): void;
 
-export declare function logSingleBlockButWithItsContentStringSliced (
-    theBlockToLog?: SFCBlock,
-    slicingLength?: number
+export declare function 在命令行环境中打印原文件拆分得到的整个结构化数据_但截短其中各内容块之内容 (
+    整个结构化数据?: SFCDescriptor,
+    各内容块之内容文本长度上限?: number
+): void;
+
+export declare function 在命令行环境中打印某内容块之详情_但截短其内容之原文 (
+    某内容块之结构化数据?: SFCBlock,
+    各内容块之内容文本长度上限?: number
 ): void;

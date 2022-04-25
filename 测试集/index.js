@@ -192,7 +192,7 @@ export default class PugTemplateTest extends Vue {
         原始Vue文件之内容全文,
         {
             ...配置项集,
-            用于命令行消息中的对原内容的扼要描述: '<template> 采用了 Pug 语言',
+            用于命令行消息中的对原内容的扼要描述: '<template> 采用了 Pug 语言的 .vue 字符串',
         }
     )
 

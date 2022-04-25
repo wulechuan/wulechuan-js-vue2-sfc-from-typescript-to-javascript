@@ -1,18 +1,18 @@
-import chalk from 'chalk'
+import 彩色粉笔 from 'chalk'
 
 
 
 
 
-/** @typedef {'编译成' | 'compiling' | 'transpiling' | 'rendering' | 'formatting' | '代码格式标准化'} T_KnownVerbs */
+/** @typedef {'编译成' | '之代码格式标准化'} 范_标准动词 */
 
 
 
 
 
-export const loggingPrefix = `${chalk.whiteBright('@wulechuan/vue2-official-sfc-parser')}:`
-export const errorLoggingPrefix = `\n${chalk.red('Error')}:\n${loggingPrefix}`
-export const debuggingPrefix = `\n${loggingPrefix}\n${chalk.bgYellow.black('DEBUG')}:`
+export const 正常消息之统一前缀文本 = `${彩色粉笔.whiteBright('@wulechuan/vue2-sfc-from-typescript-to-javascript')}:`
+export const 出错消息之统一前缀文本 = `\n${彩色粉笔.red('出错')}：\n${正常消息之统一前缀文本}`
+export const 调试信息之统一前缀文本 = `\n${正常消息之统一前缀文本}\n${彩色粉笔.bgYellow.black('调试')}：`
 
 
 
@@ -55,52 +55,38 @@ export function 依次尽早采纳对象值 (...全部的值) {
 
 
 /**
- * @param {string} sourceDescriptionName
+ * @param {string} 用于命令行消息中的对原内容的扼要描述
  * @returns {string}
  */
-function _getColorfulSourceDescription (sourceDescriptionName) {
-    const sourceDescriptionNameHasProvided = !(/^< 未给出描述的 .vue （散列编号： [\d\w]+）>$/.test(sourceDescriptionName))
+function _求_彩色的文本_用于命令行消息中的对原内容的扼要描述 (用于命令行消息中的对原内容的扼要描述) {
+    const 外界确实提供了扼要描述 = !(/^（ 未给出描述的 .vue ，内容全文之散列： [\d\w]+ ）$/.test(用于命令行消息中的对原内容的扼要描述))
 
-    const sourceDescription = sourceDescriptionNameHasProvided
-        ? chalk.bgBlue.whiteBright(` ${sourceDescriptionName} `)
-        : chalk.bgHex('#741').hex('#ccc')(` ${sourceDescriptionName} `)
+    const 上色后的文本 = 外界确实提供了扼要描述
+        ? 彩色粉笔.bgBlue.whiteBright(` ${用于命令行消息中的对原内容的扼要描述} `)
+        : 彩色粉笔.bgHex('#741').hex('#ccc')(`${用于命令行消息中的对原内容的扼要描述}`)
 
-    return `${loggingPrefix}\n    ${sourceDescription}`
+    return `${正常消息之统一前缀文本}\n    ${上色后的文本}`
 }
 
 /**
- * @param {string} sourceDescriptionName
- * @param {string} fromSomething
- * @param {string} toSomething
- * @param {T_KnownVerbs} verb
- * @param {string} suffix
+ * @param {string} 用于命令行消息中的对原内容的扼要描述
+ * @param {string} 源内容之称谓
+ * @param {string} 产出内容之称谓
+ * @param {范_标准动词} 动作之称谓
+ * @param {string} 后缀文本
  * @returns {string}
  */
-function _logTransformationEvent (sourceDescriptionName, fromSomething, toSomething, verb, suffix) {
+function _在命令行环境中报告某事件 (用于命令行消息中的对原内容的扼要描述, 源内容之称谓, 动作之称谓, 产出内容之称谓, 后缀文本) {
     console.log(`\n${
-        _getColorfulSourceDescription(sourceDescriptionName)
-    }: ${
-        verb || '编译成'
+        _求_彩色的文本_用于命令行消息中的对原内容的扼要描述(用于命令行消息中的对原内容的扼要描述)
+    }： 将 ${
+        彩色粉笔.green(源内容之称谓)
     } ${
-        chalk.green(fromSomething)
-    } into ${
-        chalk.yellow(toSomething)
+        动作之称谓 || '编译成'
     }${
-        suffix
-    }`)
-}
-
-
-
-
-
-export function logSkippingOfATransformation (sourceDescriptionName, theOriginalThing) {
-    console.log(`\n${
-        _getColorfulSourceDescription(sourceDescriptionName)
-    }: ${
-        chalk.bgYellow.black(` ${theOriginalThing} `)
+        产出内容之称谓 ? ` ${彩色粉笔.yellow(产出内容之称谓)}` : ''
     } ${
-        chalk.yellow('outputs as is.')
+        后缀文本
     }`)
 }
 
@@ -108,47 +94,75 @@ export function logSkippingOfATransformation (sourceDescriptionName, theOriginal
 
 
 
-export function logBeginningOfATransformation (sourceDescriptionName, fromSomething, toSomething, verb) {
-    _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, '...')
+export function 在命令行环境中报告某内容块被丢弃 (用于命令行消息中的对原内容的扼要描述, 原始内容之称谓) {
+    console.log(`\n${
+        _求_彩色的文本_用于命令行消息中的对原内容的扼要描述(用于命令行消息中的对原内容的扼要描述)
+    }： ${
+        彩色粉笔.bgRed.white(` ${原始内容之称谓} `)
+    }${
+        彩色粉笔.bgWhiteBright.redBright(' 被丢弃 ')
+    }`)
 }
 
 
 
 
 
-export function logSuccessionOfATransformation (sourceDescriptionName, fromSomething, toSomething, verb) {
-    _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, `...${chalk.greenBright('成功')}`)
+export function 在命令行环境中报告某内容块原封未动 (用于命令行消息中的对原内容的扼要描述, 原始内容之称谓) {
+    console.log(`\n${
+        _求_彩色的文本_用于命令行消息中的对原内容的扼要描述(用于命令行消息中的对原内容的扼要描述)
+    }： ${
+        彩色粉笔.bgYellow.black(` ${原始内容之称谓} `)
+    }${
+        彩色粉笔.bgGreenBright.black(' 原封未动 ')
+    }`)
 }
 
 
 
 
 
-export function logAllBlocksOfTheDescriptorButWithSliceEachContentSliced (theDescriptor, slicingLength) {
-    if (!theDescriptor || typeof theDescriptor !== 'object') {
-        console.log(`${debuggingPrefix}`, 'the descriptor:', theDescriptor)
+export function 在命令行环境中报告某任务已启动 (用于命令行消息中的对原内容的扼要描述, 源内容之称谓, 动作之称谓, 产出内容之称谓) {
+    _在命令行环境中报告某事件(用于命令行消息中的对原内容的扼要描述, 源内容之称谓, 动作之称谓, 产出内容之称谓, '……')
+}
+
+
+
+
+
+export function 在命令行环境中报告某任务已成功 (用于命令行消息中的对原内容的扼要描述, 源内容之称谓, 动作之称谓, 产出内容之称谓) {
+    _在命令行环境中报告某事件(用于命令行消息中的对原内容的扼要描述, 源内容之称谓, 动作之称谓, 产出内容之称谓, `…… ${彩色粉笔.greenBright('成功')}`)
+}
+
+
+
+
+
+export function 在命令行环境中打印原文件拆分得到的整个结构化数据_但截短其中各内容块之内容 (整个结构化数据, 各内容块之内容文本长度上限) {
+    if (!整个结构化数据 || typeof 整个结构化数据 !== 'object') {
+        console.log(`${调试信息之统一前缀文本}`, '原 .vue 文件之内容拆分后的结构化数据：', 整个结构化数据)
         return
     }
 
-    const copyOfDesctiptorForLogging = {}
-    Object.keys(theDescriptor).forEach(key => {
-        const propertyValue = theDescriptor[key]
+    const 结构化数据之副本_仅用于打印 = {}
+    Object.keys(整个结构化数据).forEach(键 => {
+        const 值 = 整个结构化数据[键]
         try {
-            copyOfDesctiptorForLogging[key] = _getLoggingCopyOfSingleBlockButWithItsContentStringSliced(propertyValue, slicingLength)
+            结构化数据之副本_仅用于打印[键] = _为某须打印之实体制作副本_如遇列表则递归处理(值, 各内容块之内容文本长度上限)
         } catch (e) {
-            console.log(`${errorLoggingPrefix}\n`, e)
+            console.log(`${出错消息之统一前缀文本}\n`, e)
         }
     })
 
-    console.log(`${debuggingPrefix}`, 'the descriptor:', copyOfDesctiptorForLogging)
+    console.log(`${调试信息之统一前缀文本}`, 'the descriptor:', 结构化数据之副本_仅用于打印)
 }
 
 
 
 
 
-export function logSingleBlockButWithItsContentStringSliced (theBlockToLog, slicingLength) {
-    console.log(`${debuggingPrefix}`, 'the block:', _getLoggingCopyOfSingleBlockButWithItsContentStringSliced(theBlockToLog, slicingLength))
+export function 在命令行环境中打印某内容块之详情_但截短其内容之原文 (某内容块之结构化数据, 各内容块之内容文本长度上限) {
+    console.log(`${调试信息之统一前缀文本}`, '内容块：', _为某须打印之实体制作副本_如遇列表则递归处理(某内容块之结构化数据, 各内容块之内容文本长度上限))
 }
 
 
@@ -156,61 +170,64 @@ export function logSingleBlockButWithItsContentStringSliced (theBlockToLog, slic
 
 
 /**
- * @param {number} slicedCharsCount
+ * @param {number} 略去的字数
  * @returns {string}
  */
-function _getStringOfHintOfContentDidSliced(slicedCharsCount) {
-    const coreString = `\n... and ${slicedCharsCount} chars odmitted.`
-    // return chalk.yellow(coreString) // node 命令行环境中打印复杂的对象中的文本值时，无法支持自定义彩色。在对象、数组中均失败。
-    return coreString
+function _求_表达文本已截短的摘要文字(略去的字数) {
+    const 无色文本 = `\n…… 已略去 ${略去的字数} 字。`
+    // return 彩色粉笔.yellow(coreString) // node 命令行环境中打印复杂的对象中的文本值时，无法支持自定义彩色。在对象、数组中均失败。
+    return 无色文本
 }
 
-function _getLoggingCopyOfSingleBlockButWithItsContentStringSliced (theThingToLog, slicingLength) {
-    if (!theThingToLog || typeof theThingToLog !== 'object') { return theThingToLog }
 
-    if (Array.isArray(theThingToLog)) {
-        return theThingToLog.map(theThingToLog2 => _getLoggingCopyOfSingleBlockButWithItsContentStringSliced(theThingToLog2, slicingLength))
+
+
+/**
+ * @param {*} 欲打印的实体
+ * @param {number} 各内容块之内容文本长度上限
+ */
+function _为某须打印之实体制作副本_如遇列表则递归处理 (欲打印的实体, 各内容块之内容文本长度上限) {
+    if (!欲打印的实体 || typeof 欲打印的实体 !== 'object') { return 欲打印的实体 }
+
+    if (Array.isArray(欲打印的实体)) {
+        return 欲打印的实体.map(欲打印的实体2 => _为某须打印之实体制作副本_如遇列表则递归处理(欲打印的实体2, 各内容块之内容文本长度上限))
     }
 
-    const blockObject = theThingToLog
+    const 某个内容块之结构化数据 = 欲打印的实体
 
 
 
-    if (typeof blockObject.content !== 'string') { return { ...blockObject } }
+    if (typeof 某个内容块之结构化数据.content !== 'string') { return { ...某个内容块之结构化数据 } }
 
 
 
-    let usedSlicingLength
-    if (typeof slicingLength === 'number') {
-        usedSlicingLength = slicingLength
-    } else if (typeof slicingLength === 'string' && slicingLength.trim()) {
-        usedSlicingLength = +slicingLength.trim()
+    let 各内容块之内容文本长度上限_采纳的值
+    if (typeof 各内容块之内容文本长度上限 === 'number') {
+        各内容块之内容文本长度上限_采纳的值 = 各内容块之内容文本长度上限
+    } else if (typeof 各内容块之内容文本长度上限 === 'string' && 各内容块之内容文本长度上限.trim()) {
+        各内容块之内容文本长度上限_采纳的值 = +各内容块之内容文本长度上限.trim()
     }
 
-    if (!(usedSlicingLength > 128)) {
-        usedSlicingLength = 128
+    if (!(各内容块之内容文本长度上限_采纳的值 > 128)) {
+        各内容块之内容文本长度上限_采纳的值 = 128
     }
 
-    const objectLoggingCopy = { ...blockObject }
+    const 某个内容块之结构化数据的副本_仅用于打印 = { ...某个内容块之结构化数据 }
 
-    const fullContent = objectLoggingCopy.content
-    if (typeof fullContent === 'string') {
-        delete objectLoggingCopy.content
+    const 内容全文 = 某个内容块之结构化数据的副本_仅用于打印.content
+    if (typeof 内容全文 === 'string') {
+        delete 某个内容块之结构化数据的副本_仅用于打印.content
 
-        let slicedContent = fullContent.slice(0, usedSlicingLength)
-        const slicedCharsCount = fullContent.length - usedSlicingLength
-        if (slicedCharsCount > 0) {
-            // slicedContent = [
-            //     slicedContent,
-            //     _getStringOfHintOfContentDidSliced(slicedCharsCount),
-            // ]
-            slicedContent = `${slicedContent}${_getStringOfHintOfContentDidSliced(slicedCharsCount)}`
+        let 截短的内容 = 内容全文.slice(0, 各内容块之内容文本长度上限_采纳的值)
+        const 截去部分的字数 = 内容全文.length - 各内容块之内容文本长度上限_采纳的值
+        if (截去部分的字数 > 0) {
+            截短的内容 = `${截短的内容}${_求_表达文本已截短的摘要文字(截去部分的字数)}`
         }
 
-        objectLoggingCopy.slicedContent = slicedContent
+        某个内容块之结构化数据的副本_仅用于打印.slicedContent = 截短的内容
     }
 
 
 
-    return objectLoggingCopy
+    return 某个内容块之结构化数据的副本_仅用于打印
 }
