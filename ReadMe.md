@@ -108,7 +108,7 @@ npm  i  @wulechuan/vue2-sfc-from-typescript-to-javascript
 
 注意下方示例代码中的 `transformContentStringOfSingleVueFile` 函数。
 
-另可参阅本项目代码库中的 `./tests/index.js`。
+另可参阅本项目代码库中的 `./测试集/index.js`。
 
 ```js
 const tsconfig = {
@@ -183,6 +183,9 @@ export type T_TransformationOptions = {
     shouldNotCompileSass?: boolean;
     shouldNotCompileLESS?: boolean;
 
+    shouldNotOutputTemplateTag?: boolean;
+    shouldNotOutputAnyStyleTags?: boolean;
+
     tsconfig?: T_tsconfig;
     pugCompilationOptions?: T_PugCompilationOptions;
     cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
@@ -218,14 +221,6 @@ export type T_TransformationOptions = {
 | 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git](https://code.aliyun.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git) |
 | GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git](https://github.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git) |
 
-
-
-
----
-
-## 未来计划
-
--   暂无。
 
 
 

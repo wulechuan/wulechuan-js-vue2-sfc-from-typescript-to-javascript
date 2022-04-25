@@ -24,7 +24,7 @@ import {
 
     logAllBlocksOfTheDescriptorButWithSliceEachContentSliced,
     logSingleBlockButWithItsContentStringSliced,
-} from './helpers'
+} from './辅助工具集'
 
 
 
@@ -42,6 +42,9 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
         shouldNotCompileStylus,
         shouldNotCompileSass,
         shouldNotCompileLESS,
+
+        shouldNotOutputTemplateTag,
+        shouldNotOutputAnyStyleTags,
 
         tsconfig,
         pugCompilationOptions,
@@ -97,7 +100,7 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
     let flattenedSFCBlocks = []
 
-    if (template) {
+    if (template && !shouldNotOutputTemplateTag) {
         flattenedSFCBlocks.push(template)
     }
 
@@ -105,9 +108,15 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
         flattenedSFCBlocks.push(script)
     }
 
+    if (!shouldNotOutputAnyStyleTags) {
+        flattenedSFCBlocks = [
+            ...flattenedSFCBlocks,
+            ...styles,
+        ]
+    }
+
     flattenedSFCBlocks = [
         ...flattenedSFCBlocks,
-        ...styles,
         ...customBlocks,
     ]
 

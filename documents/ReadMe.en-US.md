@@ -73,7 +73,7 @@ npm  i  @wulechuan/vue2-sfc-from-typescript-to-javascript
 
 Notice the function named `transformContentStringOfSingleVueFile` below.
 
-See also `./tests/index.js` in the repository of this project.
+See also `./测试集/index.js` in the repository of this project.
 
 ```js
 const tsconfig = {
@@ -149,6 +149,9 @@ export type T_TransformationOptions = {
     shouldNotCompileSass?: boolean;
     shouldNotCompileLESS?: boolean;
 
+    shouldNotOutputTemplateTag?: boolean;
+    shouldNotOutputAnyStyleTags?: boolean;
+
     tsconfig?: T_tsconfig;
     pugCompilationOptions?: T_PugCompilationOptions;
     cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
@@ -175,11 +178,4 @@ Where
 
 
 
-
-
----
-
-## TODOs
-
--   Nothing at present.
 

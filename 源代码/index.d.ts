@@ -15,6 +15,9 @@ declare module '@wulechuan/vue2-sfc-from-typescript-to-javascript' {
         shouldNotCompileSass?: boolean;
         shouldNotCompileLESS?: boolean;
 
+        shouldNotOutputTemplateTag?: boolean;
+        shouldNotOutputAnyStyleTags?: boolean;
+
         tsconfig?: T_tsconfig;
         pugCompilationOptions?: T_PugCompilationOptions;
         cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
