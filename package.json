@@ -6,8 +6,8 @@
     "description": "This tool treats a string as content of a `.vue` file, with its `<script>` part written in TypeScript, and covert the entire file content string into a new string, as the content of a new `.vue` file, where its `<script>` block is written in JavaScript.",
     "main": "./源代码/index.js",
     "scripts": {
-        "remove-all-html-docs": "rimraf  ./ReadMe.html  ./documents/**/*.html",
-        "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./documents/**/*.md  -E3  -C ./documents/wlc-md-to-html.config.js  --to '*'",
+        "remove-all-html-docs": "rimraf  ./ReadMe.html  ./文档集/**/*.html",
+        "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./文档集/**/*.md  -E3  -C ./文档集/wlc-md-to-html.config.js  --to '*'",
         "_lint-source": "eslint          --fix  ./源代码/**/*.js  .eslintrc.js  ./测试集/index.js",
         "_lint-test-results": "eslint    --fix  ./测试集/产生的-vue-文件集/**/*.vue",
         "lint": "npm  run  _lint-source",

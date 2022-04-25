@@ -1,4 +1,4 @@
 .DS_Store
 node_modules
-documents/**/*.html
+文档集/**/*.html
 ReadMe.html
