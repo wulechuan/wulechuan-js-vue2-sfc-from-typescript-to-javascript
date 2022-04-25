@@ -1,4 +1,4 @@
-import type { SFCDescriptor, SFCBlock } from '@wulechuan/vue2-official-sfc-parser/dist/types'
+import type { SFCDescriptor, SFCBlock } from '@wulechuan/vue2-official-sfc-parser/源代码/发布的源代码/types'
 
 
 
@@ -11,6 +11,9 @@ export declare const debuggingPrefix: string
 
 
 export type T_KnownVerbs = 'compiling' | 'transpiling' | 'rendering' | 'formatting';
+
+export declare function 依次尽早采纳布尔值 (...参数序列: any[]): boolean
+export declare function 依次尽早采纳对象值 (...参数序列: any[]): null | { [键: string]: 值; }
 
 export declare function logSkippingOfATransformation (
     sourceDescriptionName?: string,

@@ -4,7 +4,7 @@ import chalk from 'chalk'
 
 
 
-/** @typedef {'compiling' | 'transpiling' | 'rendering' | 'formatting'} T_KnownVerbs */
+/** @typedef {'编译成' | 'compiling' | 'transpiling' | 'rendering' | 'formatting' | '代码格式标准化'} T_KnownVerbs */
 
 
 
@@ -19,16 +19,51 @@ export const debuggingPrefix = `\n${loggingPrefix}\n${chalk.bgYellow.black('DEBU
 
 
 /**
+ *
+ * @returns {boolean}
+ */
+export function 依次尽早采纳布尔值 (...全部的值) {
+    for (let 参数之编号 = 0; 参数之编号 < 全部的值.length; 参数之编号++) {
+        const 参数值 = 全部的值[参数之编号]
+        if (typeof 参数值 === 'boolean') {
+            return 参数值
+        }
+    }
+    return false
+}
+
+
+
+
+
+/**
+ *
+ * @returns {object | null}
+ */
+export function 依次尽早采纳对象值 (...全部的值) {
+    for (let 参数之编号 = 0; 参数之编号 < 全部的值.length; 参数之编号++) {
+        const 参数值 = 全部的值[参数之编号]
+        if (typeof 参数值 === 'object' && !!参数值) {
+            return 参数值
+        }
+    }
+    return null
+}
+
+
+
+
+
+/**
  * @param {string} sourceDescriptionName
  * @returns {string}
  */
 function _getColorfulSourceDescription (sourceDescriptionName) {
-    const sourceDescriptionNameHasProvided = !!sourceDescriptionName
-        && !(/^<Untitled source [\d\w]+>$/.test(sourceDescriptionName))
+    const sourceDescriptionNameHasProvided = !(/^< 未给出描述的 .vue （散列编号： [\d\w]+）>$/.test(sourceDescriptionName))
 
     const sourceDescription = sourceDescriptionNameHasProvided
         ? chalk.bgBlue.whiteBright(` ${sourceDescriptionName} `)
-        : chalk.bgHex('#741').hex('#ccc')(sourceDescriptionName || '<Untitled source -1>')
+        : chalk.bgHex('#741').hex('#ccc')(` ${sourceDescriptionName} `)
 
     return `${loggingPrefix}\n    ${sourceDescription}`
 }
@@ -45,7 +80,7 @@ function _logTransformationEvent (sourceDescriptionName, fromSomething, toSometh
     console.log(`\n${
         _getColorfulSourceDescription(sourceDescriptionName)
     }: ${
-        verb || 'compiling'
+        verb || '编译成'
     } ${
         chalk.green(fromSomething)
     } into ${
@@ -82,7 +117,7 @@ export function logBeginningOfATransformation (sourceDescriptionName, fromSometh
 
 
 export function logSuccessionOfATransformation (sourceDescriptionName, fromSomething, toSomething, verb) {
-    _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, `...${chalk.greenBright('SUCCEEDED')}`)
+    _logTransformationEvent(sourceDescriptionName, fromSomething, toSomething, verb, `...${chalk.greenBright('成功')}`)
 }
 
 

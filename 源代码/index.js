@@ -1,4 +1,4 @@
-import { vueSFCParser } from '@wulechuan/vue2-official-sfc-parser'
+import { 将Vue2的单文件部件内容全文拆分 } from '@wulechuan/vue2-official-sfc-parser'
 import { getValidIndentationString } from '@wulechuan/get-valid-indentation-string'
 
 import simpleIndent      from 'indent'
@@ -14,6 +14,9 @@ import less from 'less'
 import hashSum from 'hash-sum'
 
 import {
+    依次尽早采纳布尔值,
+    依次尽早采纳对象值,
+
     loggingPrefix,
     debuggingPrefix,
     errorLoggingPrefix,
@@ -30,47 +33,94 @@ import {
 
 
 
-export async function transformContentStringOfSingleVueFile(originalVueFileContentString, options) {
-    options = options || {}
+export async function 处理一个Vue2的单文件部件的内容(原始Vue文件之内容全文, 配置项总集) {
+    配置项总集 = 配置项总集 || {}
 
     const {
+        用于命令行消息中的对原内容的扼要描述,
         sourceContentDescriptionName,
-        indentation: providedIndentation,
 
+        用于产生的Vue文件中各代码块的单级缩进空白,
+        indentation,
+
+        不应编译TypeScript,
         shouldNotTranspileTypescript,
+
+        不应编译Pug,
         shouldNotCompilePug,
+
+        不应编译Stylus,
         shouldNotCompileStylus,
+
+        不应编译Sass,
         shouldNotCompileSass,
+
+        不应编译LESS,
         shouldNotCompileLESS,
 
+        产生的内容中不应包含模板,
         shouldNotOutputTemplateTag,
+
+        产生的内容中不应包含任何Style标签,
         shouldNotOutputAnyStyleTags,
 
+        TypeScript语言的编译配置项集,
         tsconfig,
+
+        pug语言的编译配置项集,
         pugCompilationOptions,
+
+        cssStylus语言的编译配置项集,
         cssStylusCompilationOptions,
+
+        cssSass语言的编译配置项集,
         cssSassCompilationOptions,
+
+        cssLESS语言的编译配置项集,
         cssLESSCompilationOptions,
-    } = options
+    } = 配置项总集
 
 
 
 
 
-    const indentation = getValidIndentationString(providedIndentation, '    ')
+    const 单级缩进空白_采纳的值 = getValidIndentationString(
+        用于产生的Vue文件中各代码块的单级缩进空白,
+        getValidIndentationString(indentation, '    ')
+    )
 
-    let _sourceContentDescriptionName = sourceContentDescriptionName
-    if (!_sourceContentDescriptionName) {
-        _sourceContentDescriptionName = `<Untitled source ${
-            hashSum(originalVueFileContentString)
-        }>`
+    let 原内容的扼要描述 = sourceContentDescriptionName
+    if (typeof 用于命令行消息中的对原内容的扼要描述 === 'string' && 用于命令行消息中的对原内容的扼要描述.trim()) {
+        原内容的扼要描述 = 用于命令行消息中的对原内容的扼要描述 // .trim()
+    } else if (typeof sourceContentDescriptionName === 'string' && sourceContentDescriptionName.trim()) {
+        原内容的扼要描述 = sourceContentDescriptionName // .trim()
+    } else {
+        原内容的扼要描述 = `< 未给出描述的 .vue （散列编号： ${
+            hashSum(原始Vue文件之内容全文)
+        }）>`
     }
 
 
 
+    const 不应编译TypeScript_采纳的值 = 依次尽早采纳布尔值(不应编译TypeScript, shouldNotTranspileTypescript)
+    const 不应编译Pug_采纳的值 = 依次尽早采纳布尔值(不应编译Pug, shouldNotCompilePug)
+    const 不应编译Stylus_采纳的值 = 依次尽早采纳布尔值(不应编译Stylus, shouldNotCompileStylus)
+    const 不应编译Sass_采纳的值 = 依次尽早采纳布尔值(不应编译Sass, shouldNotCompileSass)
+    const 不应编译LESS_采纳的值 = 依次尽早采纳布尔值(不应编译LESS, shouldNotCompileLESS)
+    const 产生的内容中不应包含模板_采纳的值 = 依次尽早采纳布尔值(产生的内容中不应包含模板, shouldNotOutputTemplateTag)
+    const 产生的内容中不应包含任何Style标签_采纳的值 = 依次尽早采纳布尔值(产生的内容中不应包含任何Style标签, shouldNotOutputAnyStyleTags)
+
+    const TypeScript语言的编译配置项集_采纳的值 = 依次尽早采纳对象值(TypeScript语言的编译配置项集, tsconfig)
+    const pug语言的编译配置项集_采纳的值 = 依次尽早采纳对象值(pug语言的编译配置项集, pugCompilationOptions)
+    const cssStylus语言的编译配置项集_采纳的值 = 依次尽早采纳对象值(cssStylus语言的编译配置项集, cssStylusCompilationOptions)
+    const cssSass语言的编译配置项集_采纳的值 = 依次尽早采纳对象值(cssSass语言的编译配置项集, cssSassCompilationOptions)
+    const cssLESS语言的编译配置项集_采纳的值 = 依次尽早采纳对象值(cssLESS语言的编译配置项集, cssLESSCompilationOptions)
 
 
-    const sfcDescriptor = vueSFCParser(originalVueFileContentString)
+
+
+
+    const 源文件拆分得到的结构化数据 = 将Vue2的单文件部件内容全文拆分(原始Vue文件之内容全文)
 
     const {
         template,
@@ -78,115 +128,115 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
         styles,
         customBlocks,
         errors,
-    } = sfcDescriptor
+    } = 源文件拆分得到的结构化数据
 
     if (Array.isArray(errors) && errors.length > 0) {
         errors.forEach(
             errorString => console.error(`${errorLoggingPrefix}\n${chalk.red(errorString)}`)
         )
 
-        const errorToThrowOrReject = new Error(`${errorLoggingPrefix} ${errors.length} errors encounted.`)
+        const 记载错误之对象 = new Error(`${errorLoggingPrefix} ${errors.length} errors encounted.`)
 
-        logAllBlocksOfTheDescriptorButWithSliceEachContentSliced(sfcDescriptor, 128)
+        logAllBlocksOfTheDescriptorButWithSliceEachContentSliced(源文件拆分得到的结构化数据, 128)
 
-        return Promise.reject(errorToThrowOrReject)
+        return Promise.reject(记载错误之对象)
     } else {
-        // logAllBlocksOfTheDescriptorButWithSliceEachContentSliced(sfcDescriptor, 128)
+        // logAllBlocksOfTheDescriptorButWithSliceEachContentSliced(源文件拆分得到的结构化数据, 128)
     }
 
 
 
 
 
-    let flattenedSFCBlocks = []
+    let 展平后的各内容块之列表_乱序 = []
 
-    if (template && !shouldNotOutputTemplateTag) {
-        flattenedSFCBlocks.push(template)
+    if (template && !产生的内容中不应包含模板_采纳的值) {
+        展平后的各内容块之列表_乱序.push(template)
     }
 
     if (script) {
-        flattenedSFCBlocks.push(script)
+        展平后的各内容块之列表_乱序.push(script)
     }
 
-    if (!shouldNotOutputAnyStyleTags) {
-        flattenedSFCBlocks = [
-            ...flattenedSFCBlocks,
+    if (!产生的内容中不应包含任何Style标签_采纳的值) {
+        展平后的各内容块之列表_乱序 = [
+            ...展平后的各内容块之列表_乱序,
             ...styles,
         ]
     }
 
-    flattenedSFCBlocks = [
-        ...flattenedSFCBlocks,
+    展平后的各内容块之列表_乱序 = [
+        ...展平后的各内容块之列表_乱序,
         ...customBlocks,
     ]
 
-    const blocksSortedObeyingOriginalOrder = [
-        ...flattenedSFCBlocks,
-    ].sort((a, b) => a.start - b.start)
+    const 展平后的各内容块之列表_遵照在原文件中的出场顺序 = [
+        ...展平后的各内容块之列表_乱序,
+    ].sort((内容块甲, 内容块乙) => 内容块甲.start - 内容块乙.start)
 
-    const promisesOfAllCompilationTasks = blocksSortedObeyingOriginalOrder
-        .reduce((promises, block) => {
-            const { type, lang, attrs, content: blockOriginalContentString } = block
+    const promisesOfAllCompilationTasks = 展平后的各内容块之列表_遵照在原文件中的出场顺序
+        .reduce((汇总的承诺列表, 拆分原文件得到的某内容块) => {
+            const { type, lang, attrs, content: 该内容块的原始内容全文 } = 拆分原文件得到的某内容块
 
 
 
             if (type === 'template') {
                 if (lang === 'pug') {
-                    if (shouldNotCompilePug) {
+                    if (不应编译Pug_采纳的值) {
                         logSkippingOfATransformation(
-                            _sourceContentDescriptionName, 'pug'
+                            原内容的扼要描述, 'pug'
                         )
                     } else {
                         delete attrs.lang
                         attrs['source-language-was'] = lang
 
-                        promises.push(new Promise((resolve, reject) => {
+                        汇总的承诺列表.push(new Promise((resolve, reject) => {
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                                原内容的扼要描述, 'pug', 'HTML', '编译成'
                             )
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                                原内容的扼要描述, 'pug', 'HTML', '编译成'
                             )
 
 
 
                             const htmlString = pug.render(
-                                blockOriginalContentString,
-                                pugCompilationOptions
+                                该内容块的原始内容全文,
+                                pug语言的编译配置项集_采纳的值
                             )
 
-                            let indentedContent = changeIndentation.html(htmlString, { tabString: indentation })
-                            indentedContent = simpleIndent(indentedContent, indentation)
+                            let indentedContent = changeIndentation.html(htmlString, { tabString: 单级缩进空白_采纳的值 })
+                            indentedContent = simpleIndent(indentedContent, 单级缩进空白_采纳的值)
 
-                            block.content = indentedContent
+                            拆分原文件得到的某内容块.content = indentedContent
 
 
 
                             logSuccessionOfATransformation(
-                                _sourceContentDescriptionName, 'pug', 'HTML', 'compiling'
+                                原内容的扼要描述, 'pug', 'HTML', '编译成'
                             )
 
                             resolve(true)
                         }))
                     }
                 } else {
-                    promises.push(new Promise((resolve, reject) => {
+                    汇总的承诺列表.push(new Promise((resolve, reject) => {
                         try {
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'HTML', 'HTML', 'formatting'
+                                原内容的扼要描述, 'HTML', 'HTML', 'formatting'
                             )
 
 
 
-                            let indentedContent = changeIndentation.html(blockOriginalContentString, { tabString: indentation })
-                            indentedContent = simpleIndent(indentedContent, indentation)
+                            let indentedContent = changeIndentation.html(该内容块的原始内容全文, { tabString: 单级缩进空白_采纳的值 })
+                            indentedContent = simpleIndent(indentedContent, 单级缩进空白_采纳的值)
 
-                            block.content = indentedContent
+                            拆分原文件得到的某内容块.content = indentedContent
 
 
 
                             logSuccessionOfATransformation(
-                                _sourceContentDescriptionName, 'HTML', 'HTML', 'formatting'
+                                原内容的扼要描述, 'HTML', 'HTML', 'formatting'
                             )
 
                             // logSingleBlockButWithItsContentStringSliced(block)
@@ -202,18 +252,18 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
             if (type === 'script' && lang === 'ts') {
-                if (shouldNotTranspileTypescript) {
+                if (不应编译TypeScript_采纳的值) {
                     logSkippingOfATransformation(
-                        _sourceContentDescriptionName, 'TypeScript'
+                        原内容的扼要描述, 'TypeScript'
                     )
                 } else {
                     delete attrs.lang
                     attrs['source-language-was'] = lang
 
-                    promises.push(new Promise((resolve, reject) => {
+                    汇总的承诺列表.push(new Promise((resolve, reject) => {
                         try {
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
+                                原内容的扼要描述, 'TypeScript', 'JavaScript', '编译成'
                             )
 
 
@@ -221,16 +271,16 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
                             const {
                                 outputText: javaScriptCodes,
                             } = typescript.transpileModule(
-                                blockOriginalContentString,
-                                tsconfig
+                                该内容块的原始内容全文,
+                                TypeScript语言的编译配置项集_采纳的值
                             )
 
-                            block.content = changeIndentation.js(javaScriptCodes, { tabString: indentation })
+                            拆分原文件得到的某内容块.content = changeIndentation.js(javaScriptCodes, { tabString: 单级缩进空白_采纳的值 })
 
 
 
                             logSuccessionOfATransformation(
-                                _sourceContentDescriptionName, 'TypeScript', 'JavaScript', 'transpiling'
+                                原内容的扼要描述, 'TypeScript', 'JavaScript', '编译成'
                             )
 
                             // logSingleBlockButWithItsContentStringSliced(block)
@@ -246,23 +296,23 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
             if (type === 'style' && lang === 'stylus') {
-                if (shouldNotCompileStylus) {
+                if (不应编译Stylus_采纳的值) {
                     logSkippingOfATransformation(
-                        _sourceContentDescriptionName, 'Stylus'
+                        原内容的扼要描述, 'Stylus'
                     )
                 } else {
                     delete attrs.lang
                     attrs['source-language-was'] = lang
 
-                    promises.push(new Promise((resolve, reject) => {
+                    汇总的承诺列表.push(new Promise((resolve, reject) => {
                         try {
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'Stylus', 'CSS', 'rendering'
+                                原内容的扼要描述, 'Stylus', 'CSS', '编译成'
                             )
 
 
 
-                            stylus.render(blockOriginalContentString, cssStylusCompilationOptions, (error, cssString) => {
+                            stylus.render(该内容块的原始内容全文, cssStylus语言的编译配置项集_采纳的值, (error, cssString) => {
                                 // console.log(debuggingPrefix, '\n    error:', error, '\n    cssString:', cssString)
 
                                 if (error) {
@@ -271,12 +321,12 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
 
-                                block.content = changeIndentation.css(cssString, { tabString: indentation })
+                                拆分原文件得到的某内容块.content = changeIndentation.css(cssString, { tabString: 单级缩进空白_采纳的值 })
 
 
 
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, 'Stylus', 'CSS', 'rendering'
+                                    原内容的扼要描述, 'Stylus', 'CSS', '编译成'
                                 )
 
                                 // logSingleBlockButWithItsContentStringSliced(block)
@@ -293,57 +343,57 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
             if (type === 'style' && (lang === 'sass' || lang === 'scss')) {
-                const isSASS = lang === 'sass'
+                const sass源代码的语法风格为SASS而非SCSS = lang === 'sass'
 
-                if (shouldNotCompileSass) {
-                    if (isSASS) {
+                if (不应编译Sass_采纳的值) {
+                    if (sass源代码的语法风格为SASS而非SCSS) {
                         logSkippingOfATransformation(
-                            _sourceContentDescriptionName, 'SASS'
+                            原内容的扼要描述, 'SASS'
                         )
                     } else {
                         logSkippingOfATransformation(
-                            _sourceContentDescriptionName, 'SCSS'
+                            原内容的扼要描述, 'SCSS'
                         )
                     }
                 } else {
                     delete attrs.lang
                     attrs['source-language-was'] = lang
 
-                    promises.push(new Promise((resolve, reject) => {
+                    汇总的承诺列表.push(new Promise((resolve, reject) => {
                         try {
-                            if (isSASS) {
+                            if (sass源代码的语法风格为SASS而非SCSS) {
                                 logBeginningOfATransformation(
-                                    _sourceContentDescriptionName, ' SASS', 'CSS', 'rendering'
+                                    原内容的扼要描述, ' SASS', 'CSS', '编译成'
                                 )
                             } else {
                                 logBeginningOfATransformation(
-                                    _sourceContentDescriptionName, ' SCSS', 'CSS', 'rendering'
+                                    原内容的扼要描述, ' SCSS', 'CSS', '编译成'
                                 )
                             }
 
 
                             const compilationResult = sass.compileString(
-                                blockOriginalContentString,
+                                该内容块的原始内容全文,
                                 {
-                                    indentedSyntax: isSASS,
-                                    ...cssSassCompilationOptions,
+                                    ...cssSass语言的编译配置项集_采纳的值,
+                                    indentedSyntax: sass源代码的语法风格为SASS而非SCSS,
                                     sourceMap: false,
-                                    data: blockOriginalContentString,
+                                    data: 该内容块的原始内容全文,
                                 }
                             )
 
                             const cssString = compilationResult.css
-                            block.content = changeIndentation.css(cssString, { tabString: indentation })
+                            拆分原文件得到的某内容块.content = changeIndentation.css(cssString, { tabString: 单级缩进空白_采纳的值 })
 
 
 
-                            if (isSASS) {
+                            if (sass源代码的语法风格为SASS而非SCSS) {
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, ' SASS', 'CSS', 'rendering'
+                                    原内容的扼要描述, ' SASS', 'CSS', '编译成'
                                 )
                             } else {
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, ' SCSS', 'CSS', 'rendering'
+                                    原内容的扼要描述, ' SCSS', 'CSS', '编译成'
                                 )
                             }
 
@@ -360,23 +410,23 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
             if (type === 'style' && lang === 'less') {
-                if (shouldNotCompileLESS) {
+                if (不应编译LESS_采纳的值) {
                     logSkippingOfATransformation(
-                        _sourceContentDescriptionName, 'LESS'
+                        原内容的扼要描述, 'LESS'
                     )
                 } else {
                     delete attrs.lang
                     attrs['source-language-was'] = lang
 
-                    promises.push(new Promise((resolve, reject) => {
+                    汇总的承诺列表.push(new Promise((resolve, reject) => {
                         try {
                             logBeginningOfATransformation(
-                                _sourceContentDescriptionName, 'LESS', 'CSS', 'rendering'
+                                原内容的扼要描述, 'LESS', 'CSS', '编译成'
                             )
 
 
 
-                            less.render(blockOriginalContentString, cssLESSCompilationOptions, (error, output) => {
+                            less.render(该内容块的原始内容全文, cssLESS语言的编译配置项集_采纳的值, (error, output) => {
                                 if (error) {
                                     throw error
                                 }
@@ -384,12 +434,12 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
                                 const cssString = output.css
-                                block.content = changeIndentation.css(cssString, { tabString: indentation })
+                                拆分原文件得到的某内容块.content = changeIndentation.css(cssString, { tabString: 单级缩进空白_采纳的值 })
 
 
 
                                 logSuccessionOfATransformation(
-                                    _sourceContentDescriptionName, 'LESS', 'CSS', 'rendering'
+                                    原内容的扼要描述, 'LESS', 'CSS', '编译成'
                                 )
 
                                 // logSingleBlockButWithItsContentStringSliced(block)
@@ -405,13 +455,13 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
 
-            return promises
+            return 汇总的承诺列表
         }, [])
 
 
 
     return Promise.all(promisesOfAllCompilationTasks).then(() => {
-        const newContentStringsArray = blocksSortedObeyingOriginalOrder.reduce((blockCodesArray, block) => {
+        const 所有须输出的内容块的最终内容全文组成的列表 = 展平后的各内容块之列表_遵照在原文件中的出场顺序.reduce((blockCodesArray, block) => {
             const { type, attrs, content: blockNewContentString } = block
 
 
@@ -462,16 +512,19 @@ export async function transformContentStringOfSingleVueFile(originalVueFileConte
 
 
 
-        const fullContent = `${newContentStringsArray.join('\n'.repeat(6))}\n`
+        const 输出的Vue文件内容之全文 = `${所有须输出的内容块的最终内容全文组成的列表.join('\n'.repeat(6))}\n`
 
+        return 输出的Vue文件内容之全文
 
+    }).catch(记载错误之对象 => {
 
-        return fullContent
-    }).catch(error => {
-        if (error) {
-            console.log(errorLoggingPrefix, error)
+        if (记载错误之对象) {
+            console.log(errorLoggingPrefix, 记载错误之对象)
         }
 
-        return Promise.reject(error)
+        return Promise.reject(记载错误之对象)
+
     })
 }
+
+export const transformContentStringOfSingleVueFile = 处理一个Vue2的单文件部件的内容

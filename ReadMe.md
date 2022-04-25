@@ -50,7 +50,7 @@
 1.  本工具返回的新字符串，其内容仍视为一个 `.vue` 文件之内容。默认情况下：
 
     -   `<script>` 代码块中的代码已编译成 JavaScript 语言之代码；
-    -   `<template>` 代码块中的代码已编译成标准的 HTML 代码；
+    -   `<template>` 代码块中的代码已编译成类 HTML 代码；
     -   并且所有 `<style>` 代码块中的所有代码已编译成标准的 CSS 代码；
     -   凡自定义内容块，原封不动。
 
@@ -83,7 +83,7 @@
 
 **如果你采取第 2 方案，那么需要一个工具来帮助你做代码转换。而本工具许是阁下不二之选。**
 
-> 顺便指出，本工具虽名称为 `vue2-sfc-from-typescript-to-javascript`，易给人造成“本工具仅处理 `<script>` 代码块”的错误印象。实则本工具默认也会将 Stylus 、Sass 、LESS 转换成标准的 CSS ；并将 `<template>` 中采用 Pug 语言编写的代码编译成标准的 HTML 代码。
+> 顺便指出，本工具名称为 `vue2-sfc-from-typescript-to-javascript`，易给人造成“本工具仅处理 `<script>` 代码块”的错误印象。实则本工具默认也会将 Stylus 、Sass 、LESS 转换成标准的 CSS ；并将 `<template>` 中采用 Pug 语言编写的代码编译成类 HTML 代码。
 >
 > **所有代码转换动作默认均是开启的**，且均可通过选项关闭。若某转换开关关闭，则对应语种之代码将原封不动输出。
 
@@ -154,9 +154,14 @@ async function convert(sourceVueFilePath, targetVueFilePath, options) {
 
 #### 主函数
 
-本工具仅提供唯一的函数作为对外接口。该函数名为 `transformContentStringOfSingleVueFile` ，用于转换 `.vue` 文件之内容字符串。其签名（ Signature ）如下：
+本工具仅提供唯一的函数作为对外接口，但故意给出汉语、英语两种名称： `处理一个Vue2的单文件部件的内容` 和 `transformContentStringOfSingleVueFile`。该函数之签名（ Signature ）如下：
 
 ```ts
+function 处理一个Vue2的单文件部件的内容(
+    原始Vue文件之内容全文: string,
+    配置项总集?: T_TransformationOptions // 详见下文。
+): string
+
 function transformContentStringOfSingleVueFile(
     sourceVueFileContentString: string,
     options?: T_TransformationOptions // 详见下文。
@@ -167,48 +172,72 @@ function transformContentStringOfSingleVueFile(
 #### 主函数之选项（`options`）
 
 ```ts
-import type { CompilerOptions as T_tsconfig } from 'typescript'
-import type { Options as T_PugCompilationOptions } from 'pug'
-import type { RenderOptions as T_CssStylusCompilationOptions } from 'stylus'
-import type { Options as T_CssSassCompilationOptions } from 'sass'
+import type { CompilerOptions as 范_TypeScript语言的编译配置项集 } from 'typescript'
+import type { Options         as 范_Pug语言的编译配置项集 } from 'pug'
+import type { RenderOptions   as 范_CssStylus语言的编译配置项集 } from 'stylus'
+import type { Options         as 范_CssSass语言的编译配置项集 } from 'sass'
 import type Less from 'less'
 
 export type T_TransformationOptions = {
+    用于命令行消息中的对原内容的扼要描述?: string;
     sourceContentDescriptionName?: string;
-    indentation?: string;
 
+    用于产生的Vue文件中各代码块的单级缩进空白?: string | number | null;
+    indentation?: string | number | null;
+
+    不应编译TypeScript?: boolean;
     shouldNotTranspileTypescript?: boolean;
+
+    不应编译Pug?: boolean;
     shouldNotCompilePug?: boolean;
+
+    不应编译Stylus?: boolean;
     shouldNotCompileStylus?: boolean;
+
+    不应编译Sass?: boolean;
     shouldNotCompileSass?: boolean;
+
+    不应编译LESS?: boolean;
     shouldNotCompileLESS?: boolean;
 
+    产生的内容中不应包含模板?: boolean;
     shouldNotOutputTemplateTag?: boolean;
+
+    产生的内容中不应包含任何Style标签?: boolean;
     shouldNotOutputAnyStyleTags?: boolean;
 
-    tsconfig?: T_tsconfig;
-    pugCompilationOptions?: T_PugCompilationOptions;
-    cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
-    cssSassCompilationOptions?: T_CssSassCompilationOptions<'sync'>;
+    tsconfig?: 范_TypeScript语言的编译配置项集;
+    TypeScript语言的编译配置项集?: 范_TypeScript语言的编译配置项集;
+
+    pug语言的编译配置项集?: 范_Pug语言的编译配置项集;
+    pugCompilationOptions?: 范_Pug语言的编译配置项集;
+
+    cssStylus语言的编译配置项集?: 范_CssStylus语言的编译配置项集;
+    cssStylusCompilationOptions?: 范_CssStylus语言的编译配置项集;
+
+    cssSass语言的编译配置项集?: 范_CssSass语言的编译配置项集<'sync'>;
+    cssSassCompilationOptions?: 范_CssSass语言的编译配置项集<'sync'>;
+
+    cssLESS语言的编译配置项集?: Less.Options;
     cssLESSCompilationOptions?: Less.Options;
 };
 ```
 
 其中，
 
--   `sourceContentDescriptionName` 是一个字符串，填写该字符串，可令 Nodejs 在控制台输出的信息更明确易懂。如果给出无效值，例如 `undefined`，则本程序退而求其次，采用源 `.vue` 内容字符串之[哈希值](https://www.npmjs.com/package/hash-sum)作为其所为“名称”。
+-   `用于命令行消息中的对原内容的扼要描述` 和 `sourceContentDescriptionName` 均是字符串，填写该字符串，可令 Nodejs 在控制台输出的信息更明确易懂。如果给出无效值，例如 `undefined`，则本程序退而求其次，采用源 `.vue` 内容字符串之[哈希值](https://www.npmjs.com/package/hash-sum)作为其所为“名称”。
 
--   `indentation`  每缩进一级代码时，采用的字符串。此处亦可给出大于零的数字值而非字符串值，该数字用于规定单级缩进所需空格之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://www.npmjs.com/package/@wulechuan/get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%88%E6%89%80%E8%B0%93-api%EF%BC%89)》。
+-   `用于产生的Vue文件中各代码块的单级缩进空白` 和 `indentation` 均表达代码缩进时的单级空白字符的样貌，即每缩进一级代码时应采用的空白字符串。不仅可以给出空白字符串，亦可给出大于零的数字值，该数字用于规定单级缩进所需空格之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://www.npmjs.com/package/@wulechuan/get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%88%E6%89%80%E8%B0%93-api%EF%BC%89)》。
 
--   `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
+-   `TypeScript语言的编译配置项集` 和 `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
 
--   `pugCompilationOptions` 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
+-   `pug语言的编译配置项集` 和 `pugCompilationOptions` 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
 
--   `cssStylusCompilationOptions` 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
+-   `cssStylus语言的编译配置项集` 和 `cssStylusCompilationOptions` 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
 
--   `cssSassCompilationOptions` 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
+-   `cssSass语言的编译配置项集` 和 `cssSassCompilationOptions` 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
 
--   `cssLESSCompilationOptions` 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
+-   `cssLESS语言的编译配置项集` 和 `cssLESSCompilationOptions` 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
 
 
 

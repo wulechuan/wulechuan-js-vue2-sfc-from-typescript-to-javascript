@@ -1,11 +1,11 @@
 import path from 'path'
 import chalk from 'chalk'
 import { readFile, writeFile, mkdirp } from 'fs-extra'
-import { transformContentStringOfSingleVueFile } from '../源代码'
+import { 处理一个Vue2的单文件部件的内容, transformContentStringOfSingleVueFile } from '../源代码'
 
 
 
-const tsconfig = {
+const TypeScript语言的编译配置项集 = {
     compilerOptions: {
         target: 'ES2019',
         module: 'ESNext',
@@ -17,8 +17,8 @@ const tsconfig = {
 }
 
 const 诸测试用例之公用默认配置项集 = {
-    indentation: false,
-    tsconfig,
+    用于产生的Vue文件中各代码块的单级缩进空白: '    ',
+    TypeScript语言的编译配置项集,
 }
 
 
@@ -45,7 +45,7 @@ async function 主程序 () {
             `${容纳各输出文件之文件夹之路径}/测试用例1-输出结果-乙.vue`,
             {
                 ...诸测试用例之公用默认配置项集,
-                shouldNotOutputAnyStyleTags: true,
+                产生的内容中不应包含任何Style标签: true,
             }
         ),
 
@@ -64,9 +64,9 @@ async function 主程序 () {
 
 
         测试用例3(`${容纳各输出文件之文件夹之路径}/测试用例3-输出结果.vue`, {
-            indentation: true,
-            tsconfig,
-            shouldNotTranspileTypescript: true,
+            用于产生的Vue文件中各代码块的单级缩进空白: '  ',
+            TypeScript语言的编译配置项集,
+            不应编译TypeScript: true,
         }),
     ])
 
@@ -124,11 +124,11 @@ $default-color: cyan;
 </style>
 `
 
-    const 得到的新的Vue文件之内容全文 = await transformContentStringOfSingleVueFile(
+    const 得到的新的Vue文件之内容全文 = await 处理一个Vue2的单文件部件的内容(
         原始Vue文件之内容全文,
         {
             ...配置项集,
-            // sourceContentDescriptionName: 'My Testing Content 1',
+            // 用于命令行消息中的对原内容的扼要描述: 'My Testing Content 1',
         }
     )
 
@@ -147,7 +147,7 @@ async function 测试用例2 (原始文件之路径, 输出文件之路径, 配�
         原始Vue文件之内容全文,
         {
             ...配置项集,
-            sourceContentDescriptionName: '第二则测试，代码来自一个真实的 .vue 文件',
+            用于命令行消息中的对原内容的扼要描述: '第二则测试，代码来自一个真实的 .vue 文件',
         }
     )
 
@@ -188,11 +188,11 @@ export default class PugTemplateTest extends Vue {
 </script>
 `
 
-    const 得到的新的Vue文件之内容全文 = await transformContentStringOfSingleVueFile(
+    const 得到的新的Vue文件之内容全文 = await 处理一个Vue2的单文件部件的内容(
         原始Vue文件之内容全文,
         {
             ...配置项集,
-            sourceContentDescriptionName: '<template> 采用了 Pug 语言',
+            用于命令行消息中的对原内容的扼要描述: '<template> 采用了 Pug 语言',
         }
     )
 

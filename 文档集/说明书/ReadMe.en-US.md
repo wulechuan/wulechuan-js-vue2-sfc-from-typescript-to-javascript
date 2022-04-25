@@ -6,7 +6,7 @@
 
 ## Multilingual Editions of this Article
 
-- 《[本文之简体中文版](../../ReadMe.md)》
+- 《[汉语说明书](../../ReadMe.md)》
 
 
 
@@ -166,7 +166,7 @@ Where
 
 -   `indentation`, the indentation per scope level. See [API of @wulechuan/get-valid-indentation-string](https://github.com/wulechuan/wulechuan-js-get-valid-indentation-string/blob/HEAD/ReadMe.en-US.md#api).
 
--   `tsconfig`, see [Official Documentation](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)》and the [full schema](http://json.schemastore.org/tsconfig).
+-   `tsconfig`, see [Official Documentation](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html) and the [full schema](http://json.schemastore.org/tsconfig).
 
 -   `pugCompilationOptions`, see [Official Documentation](https://pugjs.org/api/reference.html#pugcompilesource-options).
 
