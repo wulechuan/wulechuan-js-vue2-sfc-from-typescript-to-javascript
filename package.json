@@ -1,19 +1,19 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
-    "description": "This tool treats a string as content of a `.vue` file, with its `<script>` part written in TypeScript, and covert the entire file content string into a new string, as the content of a new `.vue` file, where its `<script>` block is written in JavaScript.",
+    "description": "本工具处理一个 `.vue` 文件之内容全文（字符串），得到一个全新的 `.vue` 文件内容之全文（字符串）。文件内容从旧到新的转变可能包含： TypeScript 翻译成 JavaScript ； Pug 翻译成类 HTML ； Stylus 、 Sass 、 LESS 均翻译成 CSS 。",
     "main": "./源代码/index.js",
     "scripts": {
         "remove-all-html-docs": "rimraf  ./ReadMe.html  ./文档集/**/*.html",
         "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./文档集/**/*.md  -E3  -C ./文档集/wlc-md-to-html.config.js  --to '*'",
-        "_lint-source": "eslint          --fix  ./源代码/**/*.js  .eslintrc.js  ./测试集/index.js",
-        "_lint-test-results": "eslint    --fix  ./测试集/产生的-vue-文件集/**/*.vue",
-        "lint": "npm  run  _lint-source",
-        "test": "rimraf  ./测试集/产生的-vue-文件集    &&    npx  babel-node  ./测试集/index.js    &    npm  run  _lint-test-results",
+        "检验以下代码：正式的源文件以及测试用的源文件": "eslint  --fix  ./源代码/**/*.js  .eslintrc.js  ./测试集/index.js",
+        "检验以下代码：测试产生的文件": "eslint                --fix  ./测试集/产生的-vue-文件集/**/*.vue",
+        "检验所有代码": "npm  run  检验以下代码：正式的源文件以及测试用的源文件",
+        "test": "rimraf  ./测试集/产生的-vue-文件集    &&    npx  babel-node  ./测试集/index.js    &    npm  run  检验以下代码：测试产生的文件",
         "start": "npm  test",
-        "before-git-commit": "npm  i                &&    npm  test",
+        "每当制作集得之版本之前": "npm  i                &&    npm  test",
         "prepublishOnly": "rimraf  ./ReadMe.html    &&    npm  test"
     },
     "keywords": [
@@ -94,7 +94,7 @@
     },
     "dependencies": {
         "@wulechuan/get-valid-indentation-string": "^1.0.9",
-        "@wulechuan/vue2-official-sfc-parser": "^0.2.1",
+        "@wulechuan/vue2-official-sfc-parser": "^1.0.0",
         "chalk": "^4.1.2",
         "hash-sum": "^2.0.0",
         "indent": "^0.0.2",
