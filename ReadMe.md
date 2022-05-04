@@ -233,7 +233,7 @@ export type T_TransformationOptions = {
 
 -   `用于命令行消息中的对原内容的扼要描述` 和 `sourceContentDescriptionName` 均是字符串，填写该字符串，可令 Nodejs 在控制台输出的信息更明确易懂。如果给出无效值，例如 `undefined`，则本程序退而求其次，采用源 `.vue` 内容字符串之[哈希值](https://www.npmjs.com/package/hash-sum)作为其所为“名称”。
 
--   `用于产生的Vue文件中各代码块的单级缩进空白` 和 `indentation` 均表达代码缩进时的单级空白字符的样貌，即每缩进一级代码时应采用的空白字符串。不仅可以给出空白字符串，亦可给出大于零的数字值，该数字用于规定单级缩进所需空格之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://www.npmjs.com/package/@wulechuan/get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%EF%BC%88%E6%89%80%E8%B0%93-api%EF%BC%89)》。
+-   `用于产生的Vue文件中各代码块的单级缩进空白` 和 `indentation` 均表达代码缩进时的单级空白字符的样貌，即每缩进一级代码时应采用的空白字符串。不仅可以给出空白字符串，亦可给出大于零的数字值，该数字用于规定单级缩进所需空格之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://gitee.com/nanchang-wulechuan/wulechuan-js-get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E6%89%80%E8%B0%93-api)》。
 
 -   `TypeScript语言的编译配置项集` 和 `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
 

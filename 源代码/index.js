@@ -1,5 +1,5 @@
 import { 将Vue2的单文件部件内容全文拆分 } from '@wulechuan/vue2-official-sfc-parser'
-import { getValidIndentationString } from '@wulechuan/get-valid-indentation-string'
+import { 求可靠的用于计算机源代码缩进的空白文本 } from '@wulechuan/get-valid-indentation-string'
 
 import simpleIndent      from 'indent'
 import changeIndentation from 'indent.js'
@@ -92,9 +92,9 @@ export async function 处理一个Vue2的单文件部件的内容(原始Vue文�
 
 
 
-    const 单级缩进空白_采纳的值 = getValidIndentationString(
+    const 单级缩进空白_采纳的值 = 求可靠的用于计算机源代码缩进的空白文本(
         用于产生的Vue文件中各代码块的单级缩进空白,
-        getValidIndentationString(indentation, '    ')
+        求可靠的用于计算机源代码缩进的空白文本(indentation, '    ')
     )
 
     let 原内容的扼要描述 = sourceContentDescriptionName
