@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/vue2-sfc-from-typescript-to-javascript",
-    "version": "0.5.5",
+    "version": "0.5.6",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《Vue 2.x 单文件部件单独编译工具》。本工具处理一个 `.vue` 文件之内容全文（字符串），得到一个全新的 `.vue` 文件内容之全文（字符串）。文件内容从旧到新的转变可能包含： TypeScript 翻译成 JavaScript ； Pug 翻译成类 HTML ； Stylus 、 Sass 、 LESS 均翻译成 CSS 。",

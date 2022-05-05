@@ -160,7 +160,12 @@ async function 转换单个Vue文件(原始文件之路径, 输出文件之路�
 
 #### 主函数
 
-本工具仅提供唯一的函数作为对外接口，但故意给出汉语、英语两种名称： `处理一个Vue2的单文件部件的内容` 和 `transformContentStringOfSingleVueFile`。该函数之签名（ Signature ）如下：
+本工具仅提供唯一的函数作为对外接口，但故意给出汉语、英语两种名称：
+
+-   `处理一个Vue2的单文件部件的内容`
+-   `transformContentStringOfSingleVueFile`
+
+该函数之签名（ Signature ）如下：
 
 ```ts
 function 处理一个Vue2的单文件部件的内容(
@@ -175,14 +180,28 @@ function transformContentStringOfSingleVueFile(
 ```
 
 
-#### 主函数之选项（`options`）
+#### 主函数之`配置项总集`（`options`）
 
 ```ts
-import type { CompilerOptions as 范_TypeScript语言的编译配置项集 } from 'typescript'
-import type { Options         as 范_Pug语言的编译配置项集 } from 'pug'
-import type { RenderOptions   as 范_CssStylus语言的编译配置项集 } from 'stylus'
-import type { Options         as 范_CssSass语言的编译配置项集 } from 'sass'
+import type {
+    CompilerOptions as 范_TypeScript语言的编译配置项集,
+} from 'typescript'
+
+import type {
+    Options         as 范_Pug语言的编译配置项集,
+} from 'pug'
+
+import type {
+    RenderOptions   as 范_CssStylus语言的编译配置项集,
+} from 'stylus'
+
+import type {
+    Options         as 范_CssSass语言的编译配置项集,
+} from 'sass'
+
 import type Less from 'less'
+
+// - - - - - - - - - - - - - - - - - - - - - -
 
 export type T_TransformationOptions = {
     用于命令行消息中的对原内容的扼要描述?: string;
@@ -212,38 +231,48 @@ export type T_TransformationOptions = {
     产生的内容中不应包含任何Style标签?: boolean;
     shouldNotOutputAnyStyleTags?: boolean;
 
-    tsconfig?: 范_TypeScript语言的编译配置项集;
-    TypeScript语言的编译配置项集?: 范_TypeScript语言的编译配置项集;
+    tsconfig?:                   范_TypeScript语言的编译配置项集;
+    TypeScript语言的编译配置项集?:  范_TypeScript语言的编译配置项集;
 
-    pug语言的编译配置项集?: 范_Pug语言的编译配置项集;
-    pugCompilationOptions?: 范_Pug语言的编译配置项集;
+    pug语言的编译配置项集?:         范_Pug语言的编译配置项集;
+    pugCompilationOptions?:       范_Pug语言的编译配置项集;
 
-    cssStylus语言的编译配置项集?: 范_CssStylus语言的编译配置项集;
+    cssStylus语言的编译配置项集?:   范_CssStylus语言的编译配置项集;
     cssStylusCompilationOptions?: 范_CssStylus语言的编译配置项集;
 
-    cssSass语言的编译配置项集?: 范_CssSass语言的编译配置项集<'sync'>;
-    cssSassCompilationOptions?: 范_CssSass语言的编译配置项集<'sync'>;
+    cssSass语言的编译配置项集?:     范_CssSass语言的编译配置项集<'sync'>;
+    cssSassCompilationOptions?:   范_CssSass语言的编译配置项集<'sync'>;
 
-    cssLESS语言的编译配置项集?: Less.Options;
-    cssLESSCompilationOptions?: Less.Options;
+    cssLESS语言的编译配置项集?:     Less.Options;
+    cssLESSCompilationOptions?:   Less.Options;
 };
 ```
 
 其中，
 
--   `用于命令行消息中的对原内容的扼要描述` 和 `sourceContentDescriptionName` 均是字符串，填写该字符串，可令 Nodejs 在控制台输出的信息更明确易懂。如果给出无效值，例如 `undefined`，则本程序退而求其次，采用源 `.vue` 内容字符串之[哈希值](https://www.npmjs.com/package/hash-sum)作为其所为“名称”。
+-   `用于命令行消息中的对原内容的扼要描述`（`sourceContentDescriptionName`）是文本（string）。填写该值可令 Nodejs 在控制台输出的信息更明确易懂。如果给出无效值，例如 `undefined`，则本程序退而求其次，采用源 `.vue` 内容字符串之[哈希值](https://www.npmjs.com/package/hash-sum)作为其所谓“名称”。
 
--   `用于产生的Vue文件中各代码块的单级缩进空白` 和 `indentation` 均表达代码缩进时的单级空白字符的样貌，即每缩进一级代码时应采用的空白字符串。不仅可以给出空白字符串，亦可给出大于零的数字值，该数字用于规定单级缩进所需空格之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://gitee.com/nanchang-wulechuan/wulechuan-js-get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E6%89%80%E8%B0%93-api)》。
+-   `用于产生的Vue文件中各代码块的单级缩进空白`（`indentation`）表达代码缩进时的单级缩进空白采用的文本。不仅可以给出空白字符串，亦可给出大于零的数字值，该数字用于规定单级缩进所需空格（`' '`）之数量。参阅《[@wulechuan/get-valid-indentation-string 的〈应用编程接口〉部分](https://gitee.com/nanchang-wulechuan/wulechuan-js-get-valid-indentation-string#%E5%BA%94%E7%94%A8%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%8F%A3%E6%89%80%E8%B0%93-api)》。
 
--   `TypeScript语言的编译配置项集` 和 `tsconfig` 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
+-   `TypeScript语言的编译配置项集`（`tsconfig`）为 TypeScript 语言的标准配置项集。本工具不对该配置项集做任何处理，亦不使用其中任何字段，而是将其直接传递给 TypeScript 的编译程序。
 
--   `pug语言的编译配置项集` 和 `pugCompilationOptions` 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
+    > 见《[官方说明](https://www.tslang.cn/docs/handbook/tsconfig-json.html)》以及《[完整定义](http://json.schemastore.org/tsconfig)》。
 
--   `cssStylus语言的编译配置项集` 和 `cssStylusCompilationOptions` 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
+-   `pug语言的编译配置项集`（`pugCompilationOptions`）为 Pug 语言的标准配置项集。本工具不对该配置项集做任何处理，亦不使用其中任何字段，而是将其直接传递给 Pug 的编译程序。
 
--   `cssSass语言的编译配置项集` 和 `cssSassCompilationOptions` 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
+    > 见《[官方说明](https://pugjs.org/api/reference.html#pugcompilesource-options)》。
 
--   `cssLESS语言的编译配置项集` 和 `cssLESSCompilationOptions` 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
+-   `cssStylus语言的编译配置项集`（`cssStylusCompilationOptions`）为 Stylus 语言的标准配置项集。本工具不对该配置项集做任何处理，亦不使用其中任何字段，而是将其直接传递给 Stylus 的编译程序。
+
+    > 见《[官方说明](https://stylus-lang.com/docs/js.html)》。
+
+-   `cssSass语言的编译配置项集`（`cssSassCompilationOptions`）为 Sass 语言的标准配置项集。本工具不对该配置项集做任何处理，亦不使用其中任何字段，而是将其直接传递给 Sass 的编译程序。
+
+    > 见《[官方说明](https://sass-lang.com/documentation/js-api#options)》。
+
+-   `cssLESS语言的编译配置项集`（`cssLESSCompilationOptions`）为 Sass 语言的标准配置项集。本工具不对该配置项集做任何处理，亦不使用其中任何字段，而是将其直接传递给 Sass 的编译程序。
+
+    > 见《[官方说明](http://lesscss.org/usage/#programmatic-usage)》。
 
 
 

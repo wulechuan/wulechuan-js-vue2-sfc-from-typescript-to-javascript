@@ -133,38 +133,52 @@ function transformContentStringOfSingleVueFile(
 #### The `options`
 
 ```ts
-import type { CompilerOptions as T_tsconfig } from 'typescript'
-import type { Options as T_PugCompilationOptions } from 'pug'
-import type { RenderOptions as T_CssStylusCompilationOptions } from 'stylus'
-import type { Options as T_CssSassCompilationOptions } from 'sass'
+import type {
+    CompilerOptions as T_tsconfig,
+} from 'typescript'
+
+import type {
+    Options as T_PugCompilationOptions,
+} from 'pug'
+
+import type {
+    RenderOptions as T_CssStylusCompilationOptions,
+} from 'stylus'
+
+import type {
+    Options as T_CssSassCompilationOptions,
+} from 'sass'
+
 import type Less from 'less'
+
+// - - - - - - - - - - - - - - - - - - - - - -
 
 export type T_TransformationOptions = {
     sourceContentDescriptionName?: string;
     indentation?: string;
 
     shouldNotTranspileTypescript?: boolean;
-    shouldNotCompilePug?: boolean;
-    shouldNotCompileStylus?: boolean;
-    shouldNotCompileSass?: boolean;
-    shouldNotCompileLESS?: boolean;
+    shouldNotCompilePug?:          boolean;
+    shouldNotCompileStylus?:       boolean;
+    shouldNotCompileSass?:         boolean;
+    shouldNotCompileLESS?:         boolean;
 
-    shouldNotOutputTemplateTag?: boolean;
-    shouldNotOutputAnyStyleTags?: boolean;
+    shouldNotOutputTemplateTag?:   boolean;
+    shouldNotOutputAnyStyleTags?:  boolean;
 
-    tsconfig?: T_tsconfig;
-    pugCompilationOptions?: T_PugCompilationOptions;
-    cssStylusCompilationOptions?: T_CssStylusCompilationOptions;
-    cssSassCompilationOptions?: T_CssSassCompilationOptions<'sync'>;
-    cssLESSCompilationOptions?: Less.Options;
+    tsconfig?:                     T_tsconfig;
+    pugCompilationOptions?:        T_PugCompilationOptions;
+    cssStylusCompilationOptions?:  T_CssStylusCompilationOptions;
+    cssSassCompilationOptions?:    T_CssSassCompilationOptions<'sync'>;
+    cssLESSCompilationOptions?:    Less.Options;
 };
 ```
 
 Where
 
--   `sourceContentDescriptionName` is just a string that helps messages in the Nodejs console a bit more meaningful. It could be a "falsy" value like `undefined`, then the [hash-sum](https://www.npmjs.com/package/hash-sum) string of the source string is used instead.
+-   `sourceContentDescriptionName` is just a string that makes messages in the Nodejs console a bit more meaningful. It could be a "falsy" value like `undefined`, then the [hash-sum](https://www.npmjs.com/package/hash-sum) string of the source string is used instead.
 
--   `indentation`, the indentation per scope level. See [API of @wulechuan/get-valid-indentation-string](https://github.com/wulechuan/wulechuan-js-get-valid-indentation-string/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/ReadMe.en-US.md#api).
+-   `indentation`, the indentation used in the output string. See [API of @wulechuan/get-valid-indentation-string](https://github.com/wulechuan/wulechuan-js-get-valid-indentation-string/blob/master/%E6%96%87%E6%A1%A3%E9%9B%86/%E8%AF%B4%E6%98%8E%E4%B9%A6/ReadMe.en-US.md#api).
 
 -   `tsconfig`, see [Official Documentation](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html) and the [full schema](http://json.schemastore.org/tsconfig).
 
