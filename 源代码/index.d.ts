@@ -49,12 +49,12 @@ declare module '@wulechuan/vue2-sfc-from-typescript-to-javascript' {
         cssLESSCompilationOptions?: Less.Options;
     };
 
-    export declare function 处理一个Vue2的单文件部件的内容 (
+    export function 处理一个Vue2的单文件部件的内容 (
         原始Vue文件之内容全文?: string,
         配置项总集?: T_TransformationOptions
     ): Promise<string>;
 
-    export declare function transformContentStringOfSingleVueFile (
+    export function transformContentStringOfSingleVueFile (
         originalVueFileContentString?: string,
         options?: T_TransformationOptions
     ): Promise<string>;

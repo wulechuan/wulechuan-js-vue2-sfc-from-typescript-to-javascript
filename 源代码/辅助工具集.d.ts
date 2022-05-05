@@ -13,7 +13,7 @@ export declare const 调试信息之统一前缀文本: string
 export type T_KnownVerbs = 'compiling' | 'transpiling' | 'rendering' | 'formatting';
 
 export declare function 依次尽早采纳布尔值 (...参数序列: any[]): boolean
-export declare function 依次尽早采纳对象值 (...参数序列: any[]): null | { [键: string]: 值; }
+export declare function 依次尽早采纳对象值 (...参数序列: any[]): null | { [键: string]: any; }
 
 export declare function 在命令行环境中报告某内容块被丢弃 (
     用于命令行消息中的对原内容的扼要描述?: string,

@@ -112,7 +112,7 @@ npm  i  @wulechuan/vue2-sfc-from-typescript-to-javascript
 
 ### 具体示例
 
-注意下方示例代码中的 `transformContentStringOfSingleVueFile` 函数。
+注意下方示例代码中的 `处理一个Vue2的单文件部件的内容` 函数。
 
 另可参阅本项目代码库中的 `./测试集/index.js`。
 
