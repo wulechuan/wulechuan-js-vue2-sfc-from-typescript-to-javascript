@@ -1,7 +1,12 @@
 import path from 'path'
 import chalk from 'chalk'
-import { readFile, writeFile, mkdirp } from 'fs-extra'
-import { 处理一个Vue2的单文件部件的内容, transformContentStringOfSingleVueFile } from '../源代码'
+import fsExtra from 'fs-extra'
+import { 处理一个Vue2的单文件部件的内容, transformContentStringOfSingleVueFile } from '../源代码/index.js'
+
+
+
+const { readFile, writeFile, mkdirp } = fsExtra
+const __dirname = '.'
 
 
 
@@ -26,7 +31,7 @@ const 诸测试用例之公用默认配置项集 = {
 
 
 async function 主程序 () {
-    const 容纳各输出文件之文件夹之路径 = path.resolve(__dirname, './产生的-vue-文件集')
+    const 容纳各输出文件之文件夹之路径 = path.resolve(__dirname, './测试集/产生的-vue-文件集')
     await mkdirp(容纳各输出文件之文件夹之路径)
 
 
@@ -71,7 +76,7 @@ async function 主程序 () {
     ])
 
     console.log(`\n\n${
-        chalk.bgGreen(` 全 ${结果集_此处仅用于计数罢了.length} 则测试用例运行完毕。`)
+        chalk.black.bgGreen(` 全 ${结果集_此处仅用于计数罢了.length} 则测试用例运行完毕。`)
     }\n\n`)
 }
 

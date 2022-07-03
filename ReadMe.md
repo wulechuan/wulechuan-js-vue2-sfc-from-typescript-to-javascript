@@ -286,5 +286,9 @@ export type T_TransformationOptions = {
 | GitHub         | 美           | [https://github.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git](https://github.com/wulechuan/wulechuan-js-vue2-sfc-from-typescript-to-javascript.git) |
 
 
+## 重要版本说明
 
+-   `v1.0.0` 改用了 ES Module 的写法。
+
+-   `v0.x.x` 沿用了就的模块写法。
 

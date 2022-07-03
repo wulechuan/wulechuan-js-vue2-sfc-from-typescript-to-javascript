@@ -28,7 +28,7 @@ import {
 
     在命令行环境中打印原文件拆分得到的整个结构化数据_但截短其中各内容块之内容,
     在命令行环境中打印某内容块之详情_但截短其内容之原文,
-} from './辅助工具集'
+} from './辅助工具集.js'
 
 
 
@@ -41,7 +41,7 @@ import {
  * @param {T_TransformationOptions} 配置项总集
  * @returns {Promise<string>}
  */
-export async function 处理一个Vue2的单文件部件的内容(原始Vue文件之内容全文, 配置项总集) {
+export async function 处理一个Vue2的单文件部件的内容 (原始Vue文件之内容全文, 配置项总集) {
     配置项总集 = 配置项总集 || {}
 
     const {

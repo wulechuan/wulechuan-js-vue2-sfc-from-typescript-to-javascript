@@ -93,7 +93,7 @@ PROCESS {
 
                     '@wulechuan/get-valid-indentation-string' = $null
                     '@wulechuan/vue2-official-sfc-parser'     = $null
-                    'chalk'                                   = @('^4', 'chalk 不能更新至第 5 或更晚的版本。因为自第 5 版始， chalk 仅支持 ES Module 语法。')
+                    'chalk'                                   = $null
                     'hash-sum'                                = $null
                     'indent'                                  = $null
                     'indent.js'                               = $null
