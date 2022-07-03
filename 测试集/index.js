@@ -71,7 +71,7 @@ async function 主程序 () {
     ])
 
     console.log(`\n\n${
-        chalk.bgGreen(` 全 ${结果集_此处仅用于计数罢了.length} 则测试用例运行完毕。`)
+        chalk.black.bgGreen(` 全 ${结果集_此处仅用于计数罢了.length} 则测试用例运行完毕。`)
     }\n\n`)
 }
 

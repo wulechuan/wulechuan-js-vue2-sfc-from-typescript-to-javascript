@@ -98,9 +98,9 @@ export function 在命令行环境中报告某内容块被丢弃 (用于命令�
     console.log(`\n${
         _求_彩色的文本_用于命令行消息中的对原内容的扼要描述(用于命令行消息中的对原内容的扼要描述)
     }： ${
-        彩色粉笔.bgRed.white(` ${原始内容之称谓} `)
+        彩色粉笔.bgRed.whiteBright(` ${原始内容之称谓} `)
     }${
-        彩色粉笔.bgWhiteBright.redBright(' 被丢弃 ')
+        彩色粉笔.bgWhiteBright.red(' 被丢弃 ')
     }`)
 }
 

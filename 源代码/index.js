@@ -41,7 +41,7 @@ import {
  * @param {T_TransformationOptions} 配置项总集
  * @returns {Promise<string>}
  */
-export async function 处理一个Vue2的单文件部件的内容(原始Vue文件之内容全文, 配置项总集) {
+export async function 处理一个Vue2的单文件部件的内容 (原始Vue文件之内容全文, 配置项总集) {
     配置项总集 = 配置项总集 || {}
 
     const {
