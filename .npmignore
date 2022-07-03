@@ -12,6 +12,7 @@
 .babelrc
 .eslintignore
 .eslintrc.js
+.eslintrc.cjs
 .markdownlint.json
 tsconfig.json
 
