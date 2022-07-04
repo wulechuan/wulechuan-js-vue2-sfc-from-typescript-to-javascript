@@ -288,7 +288,7 @@ export type T_TransformationOptions = {
 
 ## 诸重要版本之说明
 
--   `v1.0.0` 改用了 ES Module 的写法。此写法严格要求外界采用 `import` 语句或 `import()` 函数引用本 npm 工具。
+-   自 `v1.0.0` 版本始，本 npm 工具改用了 ES Module 的写法。此写法严格要求外界采用 `import` …… `from` 语句或 `import()` 函数引用本 npm 工具。
 
 -   `v0.x.x` 沿用了旧的模块写法。此写法允许外界采用 `require` 函数引用本 npm 工具。
 
